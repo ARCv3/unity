@@ -13,6 +13,9 @@ import * as React from "react"
 // import { NavSecondary } from "@/components/unity/nav-secondary"
 
 import { NavUser } from "@/components/unity/nav-user"
+
+import { NavMain } from "./nav-main"
+
 import {
   Sidebar,
   SidebarContent,
@@ -25,8 +28,64 @@ import {
 
 import { TeamSwitcher } from "./team-switcher"
 
-import { DEFAULT_GUILD_RESP_STRIPPED, GuildResponseStripped } from "@/lib/definitions"
+import { GuildResponseStripped } from "@/lib/definitions"
 import { useBackend } from "@/hooks/use-backend"
+import { BookOpen, Bot, ChartNoAxesCombined, Home, ScrollText, Settings, Settings2, SquareTerminal, SquareUserRound, UserRoundPen } from "lucide-react"
+import { title } from "process"
+
+const UNITY_SIDEBAR_LAYOUT = {
+  navMain: [
+    {
+      title: "Home",
+      url: "/dashboard",
+      icon: Home,
+      items: [
+
+      ]
+
+    },
+    {
+      title: "Insights",
+      url: "/dashboard/insights",
+      icon: ChartNoAxesCombined,
+      items: [
+
+      ],
+    },
+    {
+      title: "Transcripts",
+      url: "#",
+      icon: ScrollText,
+      items: [
+
+      ],
+    },
+    {
+      title: "Applications",
+      url: "#",
+      icon: SquareUserRound,
+      items: [
+
+      ],
+    },
+    {
+      title: "User Notes",
+      url: "#",
+      icon: UserRoundPen,
+      items: [
+
+      ],
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings,
+      items: [
+
+      ],
+    },
+  ],
+}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   
@@ -49,8 +108,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher cTeam={props.cTeam?? null} test={false} teams={guilds}/>
       </SidebarHeader>
       <SidebarContent>
-        {/* <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={UNITY_SIDEBAR_LAYOUT.navMain} />
+        {/*<NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
