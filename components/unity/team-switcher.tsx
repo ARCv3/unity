@@ -3,7 +3,9 @@
 import * as React from "react"
 import { ChevronsUpDown, Plus } from "lucide-react"
 
-import { DEFAULT_GUILD_RESPONSE, Guild, GuildResponseStripped } from "@/lib/definitions"
+import {setCookie} from 'cookies-next'
+
+import { EMPTY_GUILD_RESPONSE, GuildResponseStripped } from "@/lib/definitions"
 
 import {
     Avatar,
@@ -17,7 +19,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -28,17 +29,24 @@ import {
 } from "@/components/ui/sidebar"
 import { useBackend } from "@/hooks/use-backend"
 
+const SIDEBAR_COOKIE_NAME = "sidebar-guild"
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
+
 export function TeamSwitcher({
   teams,
-  test = false
+  test = false,
+  cTeam = null
 }: {
-  teams: GuildResponseStripped[]
+  teams: GuildResponseStripped[];
   test: boolean;
+  cTeam: string | null;
 }) {
 
+  const defaultOpen = cTeam? {id: cTeam} : EMPTY_GUILD_RESPONSE;
+
   const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
-  const [guildData, setGuildData] = React.useState(DEFAULT_GUILD_RESPONSE)
+  const [activeTeam, setActiveTeam] = React.useState(defaultOpen)
+  const [guildData, setGuildData] = React.useState(EMPTY_GUILD_RESPONSE)
 
   const { hooks, actions, utils} = useBackend()
 
@@ -46,11 +54,12 @@ export function TeamSwitcher({
 
     hooks.setIsTest(test);
     
-    actions.fetchGuild(activeTeam.id).then( (data) => {
-        setGuildData(data)
-    });
+    if (activeTeam.id)
+        actions.fetchGuild(activeTeam.id).then( (data) => {
+            setGuildData(data)
+        });
 
-  }, [activeTeam])
+  }, [activeTeam, teams])
 
   return (
     <SidebarMenu>
@@ -61,10 +70,10 @@ export function TeamSwitcher({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
                 <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={utils.getIconUrl(guildData)} alt={guildData.name} />
-                    <AvatarFallback className="rounded-lg">GU</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">?</AvatarFallback>
                 </Avatar>
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -85,16 +94,19 @@ export function TeamSwitcher({
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Teams
             </DropdownMenuLabel>
-            {teams.map((team, index) => (
+            {teams.map((team) => (
               <DropdownMenuItem
                 key={team.id}
-                onClick={() => setActiveTeam(team)}
+                onClick={() => {
+                    setCookie(SIDEBAR_COOKIE_NAME, team.id, {expires: new Date(Date.now() + SIDEBAR_COOKIE_MAX_AGE), path: "/"})
+                    setActiveTeam(team)
+                }}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                 <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={utils.getIconUrl(team)} alt={team.name} />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">?</AvatarFallback>
                 </Avatar>
                 </div>
                 {team.name}

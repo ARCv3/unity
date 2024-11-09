@@ -6,18 +6,10 @@ import '../app/globals.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Home } from "lucide-react";
-import { Guild } from "@/lib/definitions";
+import { DEFAULT_GUILD_RESP_STRIPPED, Guild, GuildResponseStripped } from "@/lib/definitions";
 
-const guilds : [Guild] = [
-    {
-        _id: 'id',
-        guildsnowflake: '707260999496892436',
-        premium: true,
-        moderators: [
-            'id'
-        ],
-        ownerid: 'ownerid'
-    }
+const guilds : [GuildResponseStripped] = [
+    DEFAULT_GUILD_RESP_STRIPPED
 ]
 
 const meta = {
@@ -40,7 +32,8 @@ const meta = {
     },
     args: {
         teams: guilds,
-        test: true
+        test: true,
+        cTeam: null,    
     },
   } satisfies Meta<typeof TeamSwitcher>;
   

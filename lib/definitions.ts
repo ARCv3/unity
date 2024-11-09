@@ -198,6 +198,56 @@ export type GuildResponse = {
 }
 
 
+export const EMPTY_GUILD_RESPONSE : GuildResponse = {
+  "id": "",
+  "name": "",
+  "icon": "",
+  "description": "description",
+  "splash": "75610b05a0dd09ec2c3c7df9f6975ea0",
+  "discovery_splash": "null",
+  "data" : {
+    "_id": "",
+    "guildsnowflake": "",
+    "premium": false,
+    "moderators": [],
+    "ownerid": ""
+},
+  "approximate_member_count": 2,
+  "approximate_presence_count": 2,
+  "features": [
+  ],
+  "emojis": [
+  ],
+  "banner": "5c3cb8d1bc159937fffe7e641ec96ca7",
+  "owner_id": "53908232506183680",
+  "application_id": "null",
+  "region": "null",
+  "afk_channel_id": "null",
+  "afk_timeout": 300,
+  "system_channel_id": "null",
+  "widget_enabled": true,
+  "widget_channel_id": "639513352485470208",
+  "verification_level": 0,
+  "roles": [
+  ],
+  "default_message_notifications": 1,
+  "mfa_level": 0,
+  "explicit_content_filter": 0,
+  "max_presences": 1000,
+  "max_members": 250000,
+  "max_video_channel_users": 25,
+  "vanity_url_code": "no",
+  "premium_tier": 0,
+  "premium_subscription_count": 0,
+  "system_channel_flags": 0,
+  "preferred_locale": "en-US",
+  "rules_channel_id": "null",
+  "public_updates_channel_id": "null",
+  "safety_alerts_channel_id": "null"
+}
+
+
+
 export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
   "id": "2909267986263572999",
   "name": "Mason's Test Server",
