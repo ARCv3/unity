@@ -4,9 +4,7 @@ import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 import '../app/globals.css'
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { Home } from "lucide-react";
-import { DEFAULT_GUILD_RESP_STRIPPED, Guild, GuildResponseStripped } from "@/lib/definitions";
+import { DEFAULT_GUILD_RESP_STRIPPED, GuildResponseStripped } from "@/lib/definitions";
 
 const guilds : [GuildResponseStripped] = [
     DEFAULT_GUILD_RESP_STRIPPED

@@ -30,8 +30,7 @@ import { TeamSwitcher } from "./team-switcher"
 
 import { GuildResponseStripped } from "@/lib/definitions"
 import { useBackend } from "@/hooks/use-backend"
-import { BookOpen, Bot, ChartNoAxesCombined, Home, ScrollText, Settings, Settings2, SquareTerminal, SquareUserRound, UserRoundPen } from "lucide-react"
-import { title } from "process"
+import { ChartNoAxesCombined, Home, ScrollText, Settings, SquareUserRound, UserRoundPen } from "lucide-react"
 
 const UNITY_SIDEBAR_LAYOUT = {
   navMain: [
@@ -54,7 +53,7 @@ const UNITY_SIDEBAR_LAYOUT = {
     },
     {
       title: "Transcripts",
-      url: "#",
+      url: "/dashboard/transcripts",
       icon: ScrollText,
       items: [
 
@@ -62,7 +61,7 @@ const UNITY_SIDEBAR_LAYOUT = {
     },
     {
       title: "Applications",
-      url: "#",
+      url: "/dashboard/applications",
       icon: SquareUserRound,
       items: [
 
@@ -70,7 +69,7 @@ const UNITY_SIDEBAR_LAYOUT = {
     },
     {
       title: "User Notes",
-      url: "#",
+      url: "/dashboard/notes",
       icon: UserRoundPen,
       items: [
 
@@ -78,7 +77,7 @@ const UNITY_SIDEBAR_LAYOUT = {
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: Settings,
       items: [
 
@@ -92,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const default_guilds : GuildResponseStripped[] = [];
   const [guilds, setGuilds] = React.useState(default_guilds)
   
-  const { consts, actions} = useBackend();
+  const { consts, actions } = useBackend();
 
   React.useEffect(() => {
     if (consts.me) {
@@ -100,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         setGuilds(x);
       })
     }
-  }, [consts.me])
+  }, [])
   
   return (
     <Sidebar variant="inset" {...props}>

@@ -43,9 +43,9 @@ export type Guild = {
   ownerid: string;
 }
 
-export type Insisght = {
+export type Insight = {
   _id: string;
-  type: string;
+  type: 'modmail' | 'config';
   date: string;
   tagline: string;
   guild_id: string;
@@ -211,7 +211,7 @@ export const EMPTY_GUILD_RESPONSE : GuildResponse = {
     "premium": false,
     "moderators": [],
     "ownerid": ""
-},
+  },
   "approximate_member_count": 2,
   "approximate_presence_count": 2,
   "features": [

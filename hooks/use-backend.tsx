@@ -1,12 +1,8 @@
 
-import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_USER_RESPONSE, Guild, GuildResponse, GuildResponseStripped, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
-import { UserIcon } from "lucide-react";
-
-
-
 
 export function useBackend() {
     
@@ -24,21 +20,39 @@ export function useBackend() {
         return res.data;
     } 
 
-    const fetchMe = async () : Promise<UserResponse> => {
+    const fetchMe =  React.useCallback(async () : Promise<UserResponse> => {
         if (isTest) {
             return DEFAULT_USER_RESPONSE;
         }
 
         const res = await axios.get(`${API_BASE_URL}/api/discord/me`);
         return res.data;
-    }
+    }, [isTest])
 
     const fetchMyGuilds = async() : Promise<GuildResponseStripped[]> => {
         if (isTest) {
             return [DEFAULT_GUILD_RESP_STRIPPED]
         }
         const res = await axios.get(`${API_BASE_URL}/api/discord/me/guilds`);
+
+
+        if (typeof res.data  === "string")
+            return []
+
         return res.data
+    }
+
+    const fetchInsights = async(guildData: GuildResponse) : Promise<Insight[]> => {
+        if (isTest) {
+            return []
+        }
+
+        const res = await axios.get(`${API_BASE_URL}/api/insights?guildid=${guildData.id}`)
+
+        if (typeof res.data  === "string")
+            return []
+
+        return res.data;
     }
 
     const getIconUrl = (guild: GuildResponse | GuildResponseStripped) : string => {
@@ -55,7 +69,7 @@ export function useBackend() {
         fetchMe().then(x => {
             setMe(x)
         })
-    }, [loginState, isTest])
+    }, [loginState, isTest, fetchMe])
 
     return {
         consts : {
@@ -65,12 +79,14 @@ export function useBackend() {
             isTest,
             setIsTest,
             loginState,
-            setLoginState
+            setLoginState,
+
         },
         actions : {
             fetchGuild,
             fetchMe,
             fetchMyGuilds,
+            fetchInsights
         },
         utils: {
             getIconUrl,

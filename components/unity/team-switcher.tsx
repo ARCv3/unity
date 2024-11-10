@@ -28,6 +28,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useBackend } from "@/hooks/use-backend"
+import { useGlobalState } from "@/hooks/use-global-state"
 
 const SIDEBAR_COOKIE_NAME = "sidebar-guild"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -46,20 +47,22 @@ export function TeamSwitcher({
 
   const { isMobile } = useSidebar()
   const [activeTeam, setActiveTeam] = React.useState(defaultOpen)
-  const [guildData, setGuildData] = React.useState(EMPTY_GUILD_RESPONSE)
+  
+  const { guild, setGuild } = useGlobalState()
 
   const { hooks, actions, utils} = useBackend()
 
-  React.useEffect(() => {
 
+  React.useEffect(() => {
+    
     hooks.setIsTest(test);
     
     if (activeTeam.id)
         actions.fetchGuild(activeTeam.id).then( (data) => {
-            setGuildData(data)
+            setGuild(data)
         });
 
-  }, [activeTeam, teams])
+  }, [activeTeam])
 
   return (
     <SidebarMenu>
@@ -72,15 +75,15 @@ export function TeamSwitcher({
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
                 <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={utils.getIconUrl(guildData)} alt={guildData.name} />
+                    <AvatarImage src={utils.getIconUrl(guild)} alt={guild.name} />
                     <AvatarFallback className="rounded-lg">?</AvatarFallback>
                 </Avatar>
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {guildData.name}
+                  {guild.name}
                 </span>
-                <span className="truncate text-xs">{guildData.data.premium? 'Premium' : 'Free'}</span>
+                <span className="truncate text-xs">{guild.data.premium? 'Premium' : 'Free'}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>

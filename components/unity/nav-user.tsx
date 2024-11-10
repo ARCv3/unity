@@ -29,6 +29,8 @@ import {
 import { UserResponse } from "@/lib/definitions"
 import { useBackend } from "@/hooks/use-backend"
 
+import { deleteCookie } from "cookies-next"
+
 export function NavUser({
   user,
 }: {
@@ -83,10 +85,14 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
+            <a href="/auth/revoke">
+              <DropdownMenuItem>
+                <LogOut />
+      
+                  Log out
+          
+              </DropdownMenuItem>
+            </a>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
