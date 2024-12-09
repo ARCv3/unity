@@ -29,7 +29,7 @@ import {
 import { UserResponse } from "@/lib/definitions"
 import { useBackend } from "@/hooks/use-backend"
 
-import { deleteCookie } from "cookies-next"
+// import { deleteCookie } from "cookies-next"
 
 export function NavUser({
   user,

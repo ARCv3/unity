@@ -99,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         setGuilds(x);
       })
     }
-  }, [])
+  }, [actions, consts.me])
   
   return (
     <Sidebar variant="inset" {...props}>

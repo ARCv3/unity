@@ -74,7 +74,7 @@ const meta = {
     args: {
       insight: {
         "_id": "",
-        "type": "",
+        "type": "loading",
         "date": "",
         "tagline": "",
         "guild_id": "",

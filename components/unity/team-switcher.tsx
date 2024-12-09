@@ -62,6 +62,7 @@ export function TeamSwitcher({
             setGuild(data)
         });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTeam])
 
   return (

@@ -45,7 +45,7 @@ export type Guild = {
 
 export type Insight = {
   _id: string;
-  type: 'modmail' | 'config';
+  type: 'modmail' | 'config' | 'loading';
   date: string;
   tagline: string;
   guild_id: string;

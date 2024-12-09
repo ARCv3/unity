@@ -50,7 +50,7 @@ export function InsightModmailCard({
 } 
 
 export function InsightConfigCard({
-  insight
+  // insight
 }: {
   insight: Insight
 }) {
