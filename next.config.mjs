@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 
-const BASE_URL = "stage.billiecord.com"
+const BASE_URL = process.env.UNITY_BASE_URI
+const DEBUG = process.env.UNITY_DEBUG
 
 const nextConfig = {
-    output: 'standalone',
-    async rewrites() {
-        return [
+
+    rewrites : async () => {
+        return DEBUG? [
             {
                 source: '/api/:path*',
                 destination: `https://${BASE_URL}/api/:path*`
@@ -14,8 +15,9 @@ const nextConfig = {
                 source: '/auth/:path*',
                 destination: `https://${BASE_URL}/auth/:path*`
             }
-        ]
+        ] : []
     }
+    
 };
 
 export default nextConfig;

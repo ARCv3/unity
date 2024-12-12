@@ -404,4 +404,4 @@ export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
   "safety_alerts_channel_id": "null"
 }
 
-export const API_BASE_URL = 'http://localhost:3000'
+export const API_BASE_URL = process.env.UNITY_API_BASE_URI ?? 'http://localhost:3000'
