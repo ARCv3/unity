@@ -1,5 +1,5 @@
 
-import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcript, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
@@ -19,6 +19,37 @@ export function useBackend() {
         const res = await axios.get(`${API_BASE_URL}/api/discord/guilds/${id}`);
         return res.data;
     } 
+
+    const fetchGuildTranscripts = React.useCallback(async (id: string): Promise<TranscriptsResponse[]> => {
+
+        if (isTest) {
+            return [DEFAULT_TRANSCRIPT_RESPONSE];
+        }
+
+        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${id}`);
+        return res.data;
+
+    }, [isTest])
+
+    const fetchTranscriptMessages = React.useCallback(async (transcript: TranscriptsResponse): Promise<Transcripts> => {
+        
+        if (isTest) {
+            return new Transcripts([DEFAULT_TRANSCRIPT])
+        }
+
+        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${transcript.GuildSnowflake}/${transcript.modmailId}`)
+        return  res.data;
+
+    }, [isTest])
+
+    const fetchUser = React.useCallback(async (id: string): Promise<UserResponse> => {
+        if (isTest) {
+            return DEFAULT_USER_RESPONSE;
+        }
+
+        const res = await axios.get(`${API_BASE_URL}/api/discord/users/${id}`);
+        return res.data;
+    }, [isTest])
 
     const fetchMe =  React.useCallback(async () : Promise<UserResponse> => {
         if (isTest) {
@@ -86,7 +117,10 @@ export function useBackend() {
             fetchGuild,
             fetchMe,
             fetchMyGuilds,
-            fetchInsights
+            fetchInsights,
+            fetchUser,
+            fetchGuildTranscripts,
+            fetchTranscriptMessages
         },
         utils: {
             getIconUrl,

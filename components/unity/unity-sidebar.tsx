@@ -99,7 +99,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         setGuilds(x);
       })
     }
-  }, [actions, consts.me])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   return (
     <Sidebar variant="inset" {...props}>

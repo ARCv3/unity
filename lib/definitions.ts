@@ -53,6 +53,23 @@ export type Insight = {
   url: string;
 }
 
+export interface ModmailInsight extends Insight {
+  data: {
+    mailid: string;
+    messages: number;
+    participants: number;
+    member: string;
+  };
+}
+
+export interface ConfigInsight extends Insight {
+  data: {
+    key: string;
+    oldvalue: string;
+    newvalue: string;
+  };
+}
+
 export type Note = {
   _id: string;
   usersnowflake: string;
@@ -63,14 +80,62 @@ export type Note = {
 }
 
 export type Transcript = {
-  modmailid: string;
+  modmailId: string;
   sendersnowflake: string;
   attachments: string[];
-  createdat: Date;
+  createdat: string;
   GuildSnowflake: string;
   messagecontent: string;
-  transcripttype: 'modmail' | 'jail',
+  transcripttype: string;
   comment: boolean;
+}
+
+export const DEFAULT_TRANSCRIPT = {
+  "modmailId": "32e90379-5d16-4b75-a4dd-6ac6d5ce6ea1",
+  "sendersnowflake": "997041131550416926",
+  "attachments": [],
+  "createdat": "2024-12-08T11:34:48.901Z",
+  "GuildSnowflake": "569929112932712469",
+  "messagecontent": "did kurt get banned or did he leave",
+  "transcripttype": "Modmail",
+  "comment": false
+}
+
+export class Transcripts {
+  
+  messages: Transcript[];
+  mailId: string;
+  type: string;
+
+  constructor(transcripts: Transcript[]) {
+    this.messages = transcripts
+    this.mailId = transcripts[0].modmailId;
+    this.type = transcripts[0].transcripttype;
+  }
+
+  // Returns the amount of messages in the transcript
+  messageCount() {
+    return this.messages.length;
+  }
+
+  // Returns the latest message
+  getLatestMessage() {
+
+    return this.messages.reduce((a, b) => {
+      return new Date(a.createdat) > new Date(b.createdat) ? a : b
+    })
+
+  }
+
+  // Returns a list of ids of all participants
+  participants() {
+
+    return this.messages.map(item => item.sendersnowflake)
+      .filter((value, index, self) => self.indexOf(value) === index)
+
+  }
+
+
 }
 
 export type RoleResponse = {
@@ -118,21 +183,21 @@ export type UserResponse = {
 
 export const DEFAULT_USER_RESPONSE : UserResponse = {
   "id": "393165866285662208",
-  "username": "ox.izzy",
+  "username": "loading",
   "avatar": "40eb1385c4f2fc13df7dbd30682c6492",
   "discriminator": "0",
   "public_flags": 4194432,
   "flags": 4194432,
   "banner": "a_32d04e60db0f40a3b553ce4011064c21",
   "accent_color": 7686470,
-  "global_name": "izzy",
+  "global_name": "Loading...",
   "avatar_decoration_data": null,
   "banner_color": "#754946",
   "clan": null,
   "mfa_enabled": true,
   "locale": "en-US",
   "premium_type": 2,
-  "email": "israelmaristide@gmail.com",
+  "email": "loading@gmail.com",
   "verified": true
 }
 
@@ -149,7 +214,7 @@ export type GuildResponseStripped = {
 
 export const DEFAULT_GUILD_RESP_STRIPPED : GuildResponseStripped = {
   "id": "956600649536114759",
-  "name": "Billie Bot Test",
+  "name": "Loading...",
   "icon": "389529dd78c55a6ddb6f1111861ac43e",
   "banner": null,
   "owner": false,
@@ -197,7 +262,25 @@ export type GuildResponse = {
   safety_alerts_channel_id : string;
 }
 
+export type TranscriptsResponse = {
+  modmailId: string;
+  transcripttype: string;
+  GuildSnowflake: string;
+  participants: string[];
+  date: string;
+}
 
+export const DEFAULT_TRANSCRIPT_RESPONSE = {
+  "modmailId": "dfc39eea-96c6-4173-be67-3e895fdd23a7",
+  "transcripttype": "Jail",
+  "GuildSnowflake": "569929112932712469",
+  "participants": [
+      "1215683496446525522",
+      "1246832337082384404",
+      "964332892094341150"
+  ],
+  "date": "2024-11-25T16:46:13.648Z"
+}
 export const EMPTY_GUILD_RESPONSE : GuildResponse = {
   "id": "",
   "name": "",
@@ -250,9 +333,9 @@ export const EMPTY_GUILD_RESPONSE : GuildResponse = {
 
 export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
   "id": "2909267986263572999",
-  "name": "Mason's Test Server",
+  "name": "Loading...",
   "icon": "389030ec9db118cb5b85a732333b7c98",
-  "description": "description",
+  "description": "loading",
   "splash": "75610b05a0dd09ec2c3c7df9f6975ea0",
   "discovery_splash": "null",
   "data" : {

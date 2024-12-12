@@ -41,7 +41,7 @@ export function NavMain({
       return window.location.pathname == item.url;
     return false;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window]);
+  }, []);
 
   return (
     <SidebarGroup>

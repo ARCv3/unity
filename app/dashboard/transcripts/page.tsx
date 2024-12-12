@@ -10,6 +10,17 @@ import {
   import {
     SidebarTrigger,
   } from "@/components/ui/sidebar"
+
+  import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
+import { TranscriptList } from "@/components/unity/transcripts/transcript-list"
+  
   
   export default function Page() {
     return (
@@ -34,18 +45,20 @@ import {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          <Table>
+            <TableCaption>A list of saved Transcripts</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[150px]">Id</TableHead>
+                <TableHead className="w-[50px]">Type</TableHead>
+                <TableHead className="w-[150px]">Date</TableHead>
+                <TableHead className="text-right w-[50px]">Participants</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TranscriptList/>
+            </TableBody>
+          </Table>
         </div>
       </main>
     )
