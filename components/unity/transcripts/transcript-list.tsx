@@ -29,11 +29,11 @@ export function TranscriptList() {
     actions.fetchGuildTranscripts(guild.id).then( x => {
       setTranscripts(x);
     })
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guild.id]);
 
   return <>
-    {transcripts.map(x => <TranscriptRow transcript={x}/>)}
+    {transcripts.map(x => <TranscriptRow key={x.modmailId} transcript={x}/>)}
   </>
 
 }
@@ -87,7 +87,7 @@ export function Participants({
 
   useEffect(() => {
 
-    let users: UserResponse[] = [];
+    const users: UserResponse[] = [];
 
     participants.forEach( x => {
       actions.fetchUser(x).then( y => {
@@ -97,12 +97,13 @@ export function Participants({
 
     setParticipantUsers(users);
 
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [participants])
 
   return (<>
 
     { participantUsers.map( x => {
-      return <div className="pb-2 mb-2 border-b-2 border-opacity-5 border-black dark:border-slate-700">
+      return <div key={x.id} className="pb-2 mb-2 border-b-2 border-opacity-5 border-black dark:border-slate-700">
           <MemberLabel user={x} placement="right" />
         </div>
     })}
@@ -122,7 +123,7 @@ export function ParticipantIcons({
 
   useEffect(() => {
 
-    let users: UserResponse[] = [];
+    const users: UserResponse[] = [];
 
     participants.forEach( x => {
       actions.fetchUser(x).then( y => {
@@ -132,13 +133,14 @@ export function ParticipantIcons({
 
     setParticipantUsers(users);
 
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [participants])
 
   return (<div className="flex">
 
     { participantUsers.map( x => {
       return (
-          <Avatar className="h-8 w-8 mr-2 ">
+          <Avatar key={x.id} className="h-8 w-8 mr-2 ">
             <AvatarImage className="rounded-lg" src={utils.getUserIconUrl(x)} alt={x.username} />
             <AvatarFallback className="rounded-lg">?</AvatarFallback>
           </Avatar>

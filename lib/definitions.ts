@@ -270,14 +270,11 @@ export type TranscriptsResponse = {
   date: string;
 }
 
-export const DEFAULT_TRANSCRIPT_RESPONSE = {
+export const DEFAULT_TRANSCRIPT_RESPONSE : TranscriptsResponse = {
   "modmailId": "dfc39eea-96c6-4173-be67-3e895fdd23a7",
   "transcripttype": "Jail",
   "GuildSnowflake": "569929112932712469",
   "participants": [
-      "1215683496446525522",
-      "1246832337082384404",
-      "964332892094341150"
   ],
   "date": "2024-11-25T16:46:13.648Z"
 }

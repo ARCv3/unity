@@ -17,8 +17,6 @@ export function InsightList(
 
   useEffect(() => {
     
-    console.log(guild)
-
     actions.fetchInsights(guild).then( x => {
       setInsights(x)
     });
