@@ -1,5 +1,5 @@
 
-import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcript, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
@@ -56,7 +56,7 @@ export function useBackend(init:boolean = true) {
             return DEFAULT_USER_RESPONSE;
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/discord/me`);
+        const res = await axios.get(`${API_BASE_URL}/v2/api/discord/me`);
         return res.data;
     }, [isTest])
 
