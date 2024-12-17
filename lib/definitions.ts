@@ -184,7 +184,7 @@ export type UserResponse = {
 export const DEFAULT_USER_RESPONSE : UserResponse = {
   "id": "393165866285662208",
   "username": "loading",
-  "avatar": "40eb1385c4f2fc13df7dbd30682c6492",
+  "avatar": "",
   "discriminator": "0",
   "public_flags": 4194432,
   "flags": 4194432,
@@ -330,8 +330,8 @@ export const EMPTY_GUILD_RESPONSE : GuildResponse = {
 
 export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
   "id": "2909267986263572999",
-  "name": "Loading...",
-  "icon": "389030ec9db118cb5b85a732333b7c98",
+  "name": "Select a guild...",
+  "icon": "",
   "description": "loading",
   "splash": "75610b05a0dd09ec2c3c7df9f6975ea0",
   "discovery_splash": "null",
