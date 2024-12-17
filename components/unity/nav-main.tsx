@@ -18,6 +18,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { useCallback } from "react"
+import { useGlobalState } from "@/hooks/use-global-state"
+import { DEFAULT_GUILD_RESPONSE } from "@/lib/definitions"
 
 
 export type navMainItemSchema = {
@@ -36,6 +38,8 @@ export function NavMain({
   items: navMainItemSchema[]
 }) {
 
+  const { guild } = useGlobalState();
+
   const isCurrent = useCallback((item : navMainItemSchema) : boolean => {
     if (typeof window !== 'undefined')
       return window.location.pathname == item.url;
@@ -46,7 +50,9 @@ export function NavMain({
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {items.map((item) => (
+        {
+        guild !== DEFAULT_GUILD_RESPONSE && 
+        items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <SidebarMenuButton style={isCurrent(item)? {backgroundColor: "hsl(var(--sidebar-accent))"} :  {}} asChild tooltip={item.title}>

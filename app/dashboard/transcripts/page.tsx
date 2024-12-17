@@ -51,7 +51,7 @@ import { TranscriptList } from "@/components/unity/transcripts/transcript-list"
               <TableRow>
                 <TableHead className="w-[150px]">Id</TableHead>
                 <TableHead className="w-[50px]">Type</TableHead>
-                <TableHead className="w-[150px]">Date</TableHead>
+                <TableHead className="truncate w-[150px]">Date</TableHead>
                 <TableHead className="text-right w-[50px]">Participants</TableHead>
               </TableRow>
             </TableHeader>

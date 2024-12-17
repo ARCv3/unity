@@ -3,7 +3,7 @@
 import { TableCell, TableRow } from "@/components/ui/table"
 import { useBackend } from "@/hooks/use-backend"
 import { useGlobalState } from "@/hooks/use-global-state";
-import { DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { DEFAULT_USER_RESPONSE, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import { timeAgo } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -20,7 +20,9 @@ export function TranscriptList() {
   
   const { actions } = useBackend();
 
-  const [transcripts, setTranscripts] = useState([DEFAULT_TRANSCRIPT_RESPONSE])
+  const default_transcript_list : TranscriptsResponse[] = []
+
+  const [transcripts, setTranscripts] = useState(default_transcript_list)
 
   const { guild } = useGlobalState();
   
@@ -28,7 +30,10 @@ export function TranscriptList() {
 
     actions.fetchGuildTranscripts(guild.id).then( x => {
       setTranscripts(x);
+    }).catch(x => {
+      console.log(x)
     })
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guild.id]);
 
@@ -48,20 +53,24 @@ export function TranscriptRow(
 
   return (
 
-    <TableRow>
+    <TableRow className="cursor-pointer">
       <TableCell className="font-medium">{transcript.modmailId}</TableCell>
       <TableCell>{transcript.transcripttype}</TableCell>
       <TableCell className="">{new Date(transcript.date).toUTCString()} ({timeAgo(new Date(transcript.date).getTime())})</TableCell>
       <TableCell>
-        <HoverCard openDelay={1}>
+        <HoverCard openDelay={1} closeDelay={1}>
           <HoverCardTrigger>
             <div className="flex text-right justify-end align-items-center">
-              <ParticipantIcons participants={
-                transcript.participants.length > 1? 
-                [transcript.participants[0],transcript.participants[1]] :
-                [transcript.participants[0]]
-              }/>
-              <p className="text-right font-bold underline cursor-pointer">{transcript.participants.length}</p>
+              {
+                transcript.participants.length > 0 && 
+                <ParticipantIcons participants={
+                  transcript.participants.length > 1? 
+                  [transcript.participants[0],transcript.participants[1]] :
+                  [transcript.participants[0]]
+                }/>
+              }
+
+              <p className="text-right font-bold underline">{transcript.participants.length}</p>
             </div>
           </HoverCardTrigger>
           <HoverCardContent>
@@ -98,7 +107,7 @@ export function Participants({
     setParticipantUsers(users);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [participants])
+  }, [participants.length])
 
   return (<>
 
@@ -134,7 +143,7 @@ export function ParticipantIcons({
     setParticipantUsers(users);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [participants])
+  }, [participants.length])
 
   return (<div className="flex">
 

@@ -84,7 +84,7 @@ export function TeamSwitcher({
                 <span className="truncate font-semibold">
                   {guild.name}
                 </span>
-                <span className="truncate text-xs">{guild.data.premium? 'Premium' : 'Free'}</span>
+                <span className="truncate text-xs">{(guild.data?guild.data.premium:false)? 'Premium' : 'Free'}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
