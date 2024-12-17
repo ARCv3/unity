@@ -37,7 +37,7 @@ export function NavUser({
   user: UserResponse
 }) {
   const { isMobile } = useSidebar()
-  const { utils } = useBackend();
+  const { utils } = useBackend(false);
 
   return (
     <SidebarMenu>

@@ -11,7 +11,7 @@ export function InsightList(
 ) {
 
   const emptyInsightList : Insight[] = []
-  const { actions } = useBackend()
+  const { actions } = useBackend(false)
   const [insights, setInsights] = useState(emptyInsightList)
   const { guild } = useGlobalState();
 

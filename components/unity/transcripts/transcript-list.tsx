@@ -18,7 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export function TranscriptList() {
   
-  const { actions } = useBackend();
+  const { actions } = useBackend(false);
 
   const [transcripts, setTranscripts] = useState([DEFAULT_TRANSCRIPT_RESPONSE])
 
@@ -83,7 +83,7 @@ export function Participants({
 }) {
 
   const [participantUsers, setParticipantUsers] = useState([DEFAULT_USER_RESPONSE])
-  const { actions } = useBackend();
+  const { actions } = useBackend(false);
 
   useEffect(() => {
 
@@ -119,7 +119,7 @@ export function ParticipantIcons({
 }) {
 
   const [participantUsers, setParticipantUsers] = useState([DEFAULT_USER_RESPONSE])
-  const { actions, utils } = useBackend();
+  const { actions, utils } = useBackend(false);
 
   useEffect(() => {
 

@@ -4,7 +4,7 @@ import * as React from "react"
 
 import axios from 'axios'
 
-export function useBackend() {
+export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [loginState, setLoginState] = React.useState(false);
@@ -97,9 +97,13 @@ export function useBackend() {
     }
 
     React.useEffect(() => {
-        fetchMe().then(x => {
-            setMe(x)
-        })
+
+        if (init) {
+            fetchMe().then(x => {
+                setMe(x)
+            })
+        }
+
     }, [loginState, isTest, fetchMe])
 
     return {

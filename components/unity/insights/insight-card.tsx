@@ -93,7 +93,7 @@ export function InsightUserStat({
 
 }) {
 
-  const { actions } = useBackend();
+  const { actions } = useBackend(false);
   const [ user, setUser ] = useState(DEFAULT_USER_RESPONSE);
 
   useEffect(() => {

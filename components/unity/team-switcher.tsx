@@ -50,7 +50,7 @@ export function TeamSwitcher({
   
   const { guild, setGuild } = useGlobalState()
 
-  const { hooks, actions, utils} = useBackend()
+  const { hooks, actions, utils} = useBackend(false)
 
 
   React.useEffect(() => {

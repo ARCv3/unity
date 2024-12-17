@@ -94,6 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { consts, actions } = useBackend();
 
   React.useEffect(() => {
+    console.log("me")
     if (consts.me) {
       actions.fetchMyGuilds().then(x => {
         setGuilds(x);

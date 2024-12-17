@@ -10,7 +10,7 @@ export function MemberLabel({
   placement: string
 }) {
 
-  const { utils } = useBackend();
+  const { utils } = useBackend(false);
   
   return (<div className="flex align-items-center justify-center">
     { 
