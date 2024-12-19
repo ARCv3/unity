@@ -53,7 +53,9 @@ export function TranscriptRow(
 
   return (
 
-    <TableRow className="cursor-pointer">
+    <TableRow className="cursor-pointer" onClick={() => {
+      window.location = `/dashboard/transcripts/${transcript.modmailId}`;
+    }}>
       <TableCell className="font-medium">{transcript.modmailId}</TableCell>
       <TableCell>{transcript.transcripttype}</TableCell>
       <TableCell className="">{new Date(transcript.date).toUTCString()} ({timeAgo(new Date(transcript.date).getTime())})</TableCell>

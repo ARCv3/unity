@@ -86,7 +86,6 @@ const SidebarProvider = React.forwardRef<
         }
 
         // This sets the cookie to keep the sidebar state.
-        console.log(`${openState}`)
         setCookie(SIDEBAR_COOKIE_NAME, `${openState}`,  { path: "/", expires: new Date( Date.now() + SIDEBAR_COOKIE_MAX_AGE)})
       },
       [setOpenProp, open]
@@ -172,6 +171,7 @@ const Sidebar = React.forwardRef<
     {
       side = "left",
       variant = "sidebar",
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       cTeam = null,
       collapsible = "offcanvas",
       className,
@@ -181,11 +181,7 @@ const Sidebar = React.forwardRef<
     ref
   ) => {
     const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
-
-    if (cTeam) {
-      console.log(cTeam);
-    }
-
+    
     if (collapsible === "none") {
       return (
         <div

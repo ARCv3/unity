@@ -21,6 +21,14 @@ export type Application = {
   joindate: string;
 }
 
+export type UserData = {
+  _id: string;
+  usersnowflake: string;
+  role: string;
+  reports: string[];
+  commands: number;
+}
+
 export type CommandStat = {
   _id: string;
   guild_id: string;
@@ -90,6 +98,14 @@ export type Transcript = {
   comment: boolean;
 }
 
+export const DEFAULT_USER_DATA = {
+  _id: "18387172983712908371290",
+  usersnowflake: "24234798273498279048",
+  role: "Member",
+  reports: [],
+  commands: 0
+}
+
 export const DEFAULT_TRANSCRIPT = {
   "modmailId": "32e90379-5d16-4b75-a4dd-6ac6d5ce6ea1",
   "sendersnowflake": "997041131550416926",
@@ -108,9 +124,17 @@ export class Transcripts {
   type: string;
 
   constructor(transcripts: Transcript[]) {
+
     this.messages = transcripts
-    this.mailId = transcripts[0].modmailId;
-    this.type = transcripts[0].transcripttype;
+
+    if (transcripts.length > 0) {
+      this.mailId = transcripts[0].modmailId;
+      this.type = transcripts[0].transcripttype;
+    } else {
+      this.mailId = ""
+      this.type = ""
+    }
+    
   }
 
   // Returns the amount of messages in the transcript
@@ -179,6 +203,7 @@ export type UserResponse = {
   premium_type: number;
   email: string;
   verified: boolean;
+  data: UserData;
 }
 
 export const DEFAULT_USER_RESPONSE : UserResponse = {
@@ -198,7 +223,8 @@ export const DEFAULT_USER_RESPONSE : UserResponse = {
   "locale": "en-US",
   "premium_type": 2,
   "email": "loading@gmail.com",
-  "verified": true
+  "verified": true,
+  "data": DEFAULT_USER_DATA
 }
 
 export type GuildResponseStripped = {

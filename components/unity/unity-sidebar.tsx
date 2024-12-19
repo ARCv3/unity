@@ -31,7 +31,6 @@ import { TeamSwitcher } from "./team-switcher"
 import { GuildResponseStripped } from "@/lib/definitions"
 import { useBackend } from "@/hooks/use-backend"
 import { ChartNoAxesCombined, Home, ScrollText, Settings, SquareUserRound, UserRoundPen } from "lucide-react"
-import { redirect } from "next/navigation"
 
 const UNITY_SIDEBAR_LAYOUT = {
   navMain: [
@@ -95,7 +94,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { consts, actions } = useBackend();
 
   React.useEffect(() => {
-    console.log("me")
     if (consts.me) {
       actions.fetchMyGuilds().then(x => {
         setGuilds(x);

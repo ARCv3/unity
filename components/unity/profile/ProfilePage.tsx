@@ -23,6 +23,7 @@ export function ProfilePage({
       setUser(x);
     })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -35,7 +36,7 @@ export function ProfilePage({
             <AvatarFallback className="rounded-lg">?</AvatarFallback>
           </Avatar>
           <h1 className="text-3xl font-bold">{user.username}</h1>
-          <p>Manager</p>
+          <p className="capitalize">{user.data.role}</p>
         </div>
         <div className="px-10 w-full max-w-[700px] mx-auto mt-10 flex flex-col justify-start">
           <span className="flex">

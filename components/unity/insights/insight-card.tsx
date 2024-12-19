@@ -102,6 +102,7 @@ export function InsightUserStat({
       setUser(x);
     })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userid])
   
   return (

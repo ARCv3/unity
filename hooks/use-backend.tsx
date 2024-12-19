@@ -42,6 +42,17 @@ export function useBackend(init:boolean = true) {
 
     }, [isTest])
 
+    const fetchTranscriptMessagesGuildId = React.useCallback(async (guildid: string, transcriptID: string): Promise<Transcripts> => {
+        
+        if (isTest) {
+            return new Transcripts([DEFAULT_TRANSCRIPT])
+        }
+
+        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${guildid}/${transcriptID}`)
+        return new Transcripts(res.data);
+
+    }, [isTest])
+
     const fetchUser = React.useCallback(async (id: string): Promise<UserResponse> => {
         if (isTest) {
             return DEFAULT_USER_RESPONSE;
@@ -124,7 +135,8 @@ export function useBackend(init:boolean = true) {
             fetchInsights,
             fetchUser,
             fetchGuildTranscripts,
-            fetchTranscriptMessages
+            fetchTranscriptMessages,
+            fetchTranscriptMessagesGuildId
         },
         utils: {
             getIconUrl,
