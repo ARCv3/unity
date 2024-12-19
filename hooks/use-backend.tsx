@@ -3,12 +3,14 @@ import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFA
 import * as React from "react"
 
 import axios from 'axios'
+import { useRouter } from "next/navigation";
 
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [loginState, setLoginState] = React.useState(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
+    const { push } = useRouter();
 
     const fetchGuild = async (id: string) : Promise<GuildResponse> => {
 
@@ -68,6 +70,9 @@ export function useBackend(init:boolean = true) {
         }
 
         const res = await axios.get(`${API_BASE_URL}/v2/api/discord/me`);
+
+        push(res.request.responseURL);
+
         return res.data;
     }, [isTest])
 
