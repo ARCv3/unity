@@ -54,7 +54,7 @@ export function TranscriptRow(
   return (
 
     <TableRow className="cursor-pointer" onClick={() => {
-      window.location = `/dashboard/transcripts/${transcript.modmailId}`;
+      window.location.href = `/dashboard/transcripts/${transcript.modmailId}`;
     }}>
       <TableCell className="font-medium">{transcript.modmailId}</TableCell>
       <TableCell>{transcript.transcripttype}</TableCell>

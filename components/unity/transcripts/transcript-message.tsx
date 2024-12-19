@@ -1,9 +1,8 @@
 "use client"
 
 import { useBackend } from "@/hooks/use-backend"
-import { useGlobalState } from "@/hooks/use-global-state";
-import { DEFAULT_USER_RESPONSE, Transcript, Transcripts } from "@/lib/definitions";
-import { useCallback, useEffect, useState } from "react";
+import { DEFAULT_USER_RESPONSE, Transcript } from "@/lib/definitions";
+import { useEffect, useState } from "react";
 
 export function TranscriptMessage({
   transcript,

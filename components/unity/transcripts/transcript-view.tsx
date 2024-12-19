@@ -36,10 +36,10 @@ export function TranscriptView({
       if (!messages.messages)
           return
 
-      var prevmail = {sendersnowflake:""}
+      let prevmail = {sendersnowflake:""}
 
-      return messages.messages.map((x, i, d) => {
-          var showuser = x.sendersnowflake !== prevmail.sendersnowflake
+      return messages.messages.map((x, i) => {
+          const showuser = x.sendersnowflake !== prevmail.sendersnowflake
           prevmail = x;
           return <>
             <TranscriptMessage showuser={showuser} key={i} transcript={x} />
