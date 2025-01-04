@@ -24,7 +24,7 @@ const nextConfig = {
         ] : []
     },
     env: {
-        API_BASE_URL : process.env.UNITY_API_BASE_URI ?? 'http://localhost:3000',
+        UNITY_API_BASE_URI : process.env.UNITY_API_BASE_URI ?? 'http://localhost:3000',
         STATUS_SITE_URL : process.env.STATUS_SITE ?? "http://localhost:3051/dashboard/3",
         SITE_TITLE : process.env.SITE_TITLE ?? "ARC UNITY",
         SITE_DESCRIPTION_META : process.env.SITE_DESCRIPTION_META?? "Arc unity dashboard dev version",
