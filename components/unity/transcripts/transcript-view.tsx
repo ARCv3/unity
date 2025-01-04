@@ -5,7 +5,6 @@ import { useGlobalState } from "@/hooks/use-global-state";
 import { Transcripts } from "@/lib/definitions";
 import { useCallback, useEffect, useState } from "react";
 import { TranscriptMessage } from "./transcript-message";
-import Image from "next/image";
 
 export function TranscriptView({
   id
@@ -55,7 +54,7 @@ export function TranscriptView({
       <div className="preamble">
                 
         <div className="preamble__guild-icon-container">
-          <Image className="preamble__guild-icon" src={utils.getIconUrl(guild)} alt=' Guild icon' loading="lazy"/>
+          <img className="preamble__guild-icon" src={utils.getIconUrl(guild)} alt=' Guild icon' loading="lazy"/>
         </div>
 
         <div className="preamble__entries-container">
