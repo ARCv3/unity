@@ -306,7 +306,7 @@ export const DEFAULT_TRANSCRIPT_RESPONSE : TranscriptsResponse = {
 }
 export const EMPTY_GUILD_RESPONSE : GuildResponse = {
   "id": "",
-  "name": "",
+  "name": "Select a Guild...",
   "icon": "",
   "description": "description",
   "splash": "75610b05a0dd09ec2c3c7df9f6975ea0",

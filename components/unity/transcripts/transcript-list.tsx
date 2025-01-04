@@ -32,6 +32,7 @@ export function TranscriptList() {
       setTranscripts(x);
     }).catch(x => {
       console.log(x)
+      setTranscripts([])
     })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,18 +99,29 @@ export function Participants({
 
   useEffect(() => {
 
-    const users: UserResponse[] = [];
 
-    participants.forEach( x => {
-      actions.fetchUser(x).then( y => {
-        users.push(y);
+    const getUsers = async () => {
+      
+      const  usersPromises: Promise<UserResponse>[] = [];
+
+      participants.forEach( x => {
+
+        usersPromises.push(
+          actions.fetchUser(x)
+        )
+
       })
+
+      return  Promise.all(usersPromises)
+    }
+
+    getUsers().then((x) => {
+      console.log(x)
+      setParticipantUsers(x);
     })
 
-    setParticipantUsers(users);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [participants.length])
+  }, [participants])
 
   return (<>
 
@@ -134,18 +146,29 @@ export function ParticipantIcons({
 
   useEffect(() => {
 
-    const users: UserResponse[] = [];
+    const getUsers = async () => {
+      
+      const  usersPromises: Promise<UserResponse>[] = [];
 
-    participants.forEach( x => {
-      actions.fetchUser(x).then( y => {
-        users.push(y);
+      participants.forEach( x => {
+
+        usersPromises.push(
+          actions.fetchUser(x)
+        )
+
       })
+
+      return  Promise.all(usersPromises)
+    }
+
+    getUsers().then((x) => {
+      console.log(x)
+      setParticipantUsers(x);
     })
 
-    setParticipantUsers(users);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [participants.length])
+  }, [participants])
+
 
   return (<div className="flex">
 

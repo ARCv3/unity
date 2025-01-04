@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight, Home, type LucideIcon } from "lucide-react"
 
 import {
   Collapsible,
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useCallback } from "react"
 import { useGlobalState } from "@/hooks/use-global-state"
-import { DEFAULT_GUILD_RESPONSE } from "@/lib/definitions"
+import { EMPTY_GUILD_RESPONSE } from "@/lib/definitions"
 
 
 export type navMainItemSchema = {
@@ -40,54 +40,75 @@ export function NavMain({
 
   const { guild } = useGlobalState();
 
-  const isCurrent = useCallback((item : navMainItemSchema) : boolean => {
-    if (typeof window !== 'undefined')
-      return window.location.pathname == item.url;
-    return false;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <SidebarGroup>
       <SidebarMenu>
         {
-        guild !== DEFAULT_GUILD_RESPONSE && 
+          guild === EMPTY_GUILD_RESPONSE && 
+          (<NavMainItem item={    {
+            title: "Home",
+            url: "/dashboard",
+            icon: Home,
+            items: [
+      
+            ]
+      
+          }} isCurrentDefault={true}/>)
+        }
+        {
+        guild !== EMPTY_GUILD_RESPONSE && 
         items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-            <SidebarMenuItem>
-              <SidebarMenuButton style={isCurrent(item)? {backgroundColor: "hsl(var(--sidebar-accent))"} :  {}} asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-              {item.items?.length ? (
-                <>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRight />
-                      <span className="sr-only">Toggle</span>
-                    </SidebarMenuAction>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {item.items?.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </a>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </>
-              ) : null}
-            </SidebarMenuItem>
-          </Collapsible>
+          <NavMainItem item={item} isCurrentDefault={false} />
         ))}
       </SidebarMenu>
     </SidebarGroup>
   )
+}
+
+function NavMainItem({item, isCurrentDefault} : {
+  item: navMainItemSchema,
+  isCurrentDefault: boolean
+}) {
+
+  const isCurrent = useCallback((item : navMainItemSchema) : boolean => {
+    if (typeof window !== 'undefined')
+      return window.location.pathname == item.url;
+    return isCurrentDefault;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  return <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+  <SidebarMenuItem>
+    <SidebarMenuButton style={isCurrent(item)? {backgroundColor: "hsl(var(--sidebar-accent))"} :  {}} asChild tooltip={item.title}>
+      <a href={item.url}>
+        <item.icon />
+        <span>{item.title}</span>
+      </a>
+    </SidebarMenuButton>
+    {item.items?.length ? (
+      <>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuAction className="data-[state=open]:rotate-90">
+            <ChevronRight />
+            <span className="sr-only">Toggle</span>
+          </SidebarMenuAction>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <SidebarMenuSub>
+            {item.items?.map((subItem) => (
+              <SidebarMenuSubItem key={subItem.title}>
+                <SidebarMenuSubButton asChild>
+                  <a href={subItem.url}>
+                    <span>{subItem.title}</span>
+                  </a>
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            ))}
+          </SidebarMenuSub>
+        </CollapsibleContent>
+      </>
+    ) : null}
+  </SidebarMenuItem>
+</Collapsible>
 }
