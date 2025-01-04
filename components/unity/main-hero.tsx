@@ -3,7 +3,6 @@ import { ArrowDownRight, ClockArrowUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { useBackend } from "@/hooks/use-backend";
 import { SITE_DESCRIPTION, SITE_HERO_IMAGE, SITE_TITLE } from "@/lib/definitions";
 
@@ -15,7 +14,7 @@ export default function Hero() {
     <section className="py-10">
       <div className="container">
         <div className="grid items-center gap-8 lg:grid-cols-2">
-        <Image
+        <img
             src={SITE_HERO_IMAGE}
             alt="placeholder hero"
             className="max-h-96 w-full rounded-md object-cover"
