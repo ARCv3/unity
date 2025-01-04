@@ -431,3 +431,10 @@ export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
 }
 
 export const API_BASE_URL = process.env.UNITY_API_BASE_URI ?? 'http://localhost:3000'
+export const STATUS_SITE_URL = process.env.STATUS_SITE ?? "http://localhost:3051/dashboard/3"
+export const SITE_TITLE = process.env.SITE_TITLE ?? "ARC UNITY"
+export const SITE_DESCRIPTION_META = process.env.SITE_DESCRIPTION_META?? "Arc unity dashboard dev version"
+export const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION?? `Lorem ipsum dolor sit amet consectetur adipisicing elit. Elig
+              doloremque mollitia fugiat omnis! Porro facilis quo animi
+              consequatur. Explicabo.`
+export const SITE_HERO_IMAGE = process.env.SITE_HERO_IMAGE?? "https://shadcnblocks.com/images/block/placeholder-1.svg"

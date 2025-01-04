@@ -1,5 +1,5 @@
 
-import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, STATUS_SITE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
-    const [loginState, setLoginState] = React.useState(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
     const { push } = useRouter();
 
@@ -69,12 +68,36 @@ export function useBackend(init:boolean = true) {
             return DEFAULT_USER_RESPONSE;
         }
 
-        const res = await axios.get(`${API_BASE_URL}/v2/api/discord/me`);
+        const req_uri = `${API_BASE_URL}/v2/api/discord/me`
+        const res = await axios.get(req_uri);
 
-        push(res.request.responseURL);
+        if (req_uri !== res.request.responseURL) { 
+            push(res.request.responseURL);
+            return DEFAULT_USER_RESPONSE;
+        }
 
         return res.data;
     }, [isTest])
+
+    const redirectAuthLogin = React.useCallback(() => {
+
+        push(`${API_BASE_URL}/auth/discord`)
+        
+    }, [push])
+
+    const redirectStatus = React.useCallback(() => {
+
+        push(`${STATUS_SITE_URL}`)
+        
+    }, [push])
+
+    const redirectDash = React.useCallback(() => {
+
+        push(`dashboard`)
+        
+    }, [push])
+
+
 
     const fetchMyGuilds = async() : Promise<GuildResponseStripped[]> => {
         if (isTest) {
@@ -120,7 +143,7 @@ export function useBackend(init:boolean = true) {
             })
         }
 
-    }, [loginState, isTest, fetchMe])
+    }, [fetchMe, init])
 
     return {
         consts : {
@@ -129,8 +152,6 @@ export function useBackend(init:boolean = true) {
         hooks : {
             isTest,
             setIsTest,
-            loginState,
-            setLoginState,
 
         },
         actions : {
@@ -141,7 +162,10 @@ export function useBackend(init:boolean = true) {
             fetchUser,
             fetchGuildTranscripts,
             fetchTranscriptMessages,
-            fetchTranscriptMessagesGuildId
+            fetchTranscriptMessagesGuildId,
+            redirectAuthLogin,
+            redirectStatus,
+            redirectDash
         },
         utils: {
             getIconUrl,

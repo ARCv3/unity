@@ -1,6 +1,3 @@
-import type { Metadata } from "next";
-import "../globals.css";
-
 import { AppSidebar } from "@/components/unity/unity-sidebar"
 
 import {
@@ -9,10 +6,6 @@ import {
 } from "@/components/ui/sidebar"
 import { cookies } from "next/headers";
 
-export const metadata: Metadata = {
-  title: "Unity Dashboard",
-  description: "unity frontend for arcv3",
-};
 
 export default async function Layout({
   children,

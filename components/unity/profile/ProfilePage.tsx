@@ -2,7 +2,6 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useBackend } from "@/hooks/use-backend";
-import { DEFAULT_USER_RESPONSE} from "@/lib/definitions";
 import { IdCard, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -12,19 +11,15 @@ export function ProfilePage({
   test: boolean
 }) {
 
-  const { utils, actions, hooks } = useBackend();
-  const [user, setUser] = useState(DEFAULT_USER_RESPONSE)
+  const { utils, hooks, consts } = useBackend();
+  const [user, setUser] = useState(consts.me)
 
   useEffect(() => {
 
     hooks.setIsTest(test)
-    
-    actions.fetchMe().then(x => {
-      setUser(x);
-    })
-
+    setUser(consts.me);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [consts.me])
 
 
   return (

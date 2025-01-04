@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SITE_TITLE, SITE_DESCRIPTION_META } from "@/lib/definitions";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Unity",
-  description: "unity frontend for arcv3",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION_META,
 };
 
 export default function RootLayout({
