@@ -2,6 +2,7 @@
 
 import { useBackend } from "@/hooks/use-backend"
 import { DEFAULT_USER_RESPONSE, Transcript } from "@/lib/definitions";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export function TranscriptMessage({
@@ -36,7 +37,7 @@ export function TranscriptMessage({
               <div className="chatlog__message-container">
                 <div className="chatlog__message hover:bg-muted/50 rounded">
                   <div className="chatlog__message-aside">
-                    <img style={{opacity: transcript.comment ? "40%" : "100%"}} className="chatlog__avatar"
+                    <Image style={{opacity: transcript.comment ? "40%" : "100%"}} className="chatlog__avatar"
                          src={utils.getUserIconUrl(user)}
                          alt="Avatar" loading="lazy"/>
                   </div>

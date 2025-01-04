@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDownRight, ArrowUpRight, ClockArrowUp } from "lucide-react";
+import { ArrowDownRight, ClockArrowUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

@@ -58,7 +58,7 @@ export function NavMain({
         {
         guild !== EMPTY_GUILD_RESPONSE && 
         items.map((item) => (
-          <NavMainItem item={item} isCurrentDefault={false} />
+          <NavMainItem key={item.url} item={item} isCurrentDefault={false} />
         ))}
       </SidebarMenu>
     </SidebarGroup>
