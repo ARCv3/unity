@@ -22,6 +22,7 @@ const nextConfig = {
         ] : []
     },
     env: {
+        USE_HTTPS: process.env.USE_HTTPS ?? false,
         UNITY_BASE_URI : process.env.UNITY_BASE_URI ?? 'localhost:3000',
         UNITY_API_BASE_URI : process.env.UNITY_API_BASE_URI ?? 'http://localhost:3030',
         STATUS_SITE_URL : process.env.STATUS_SITE ?? "http://localhost:3051/dashboard/3",
