@@ -430,7 +430,7 @@ export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
   "safety_alerts_channel_id": "null"
 }
 
-export const USE_HTTPS = process.env.USE_HTTPS
+export const USE_HTTPS = process.env.USE_HTTPS === "true"
 export const API_BASE_URL = process.env.UNITY_BASE_URI? `http${(USE_HTTPS? 's': '')}://${process.env.UNITY_BASE_URI}` : `http${(USE_HTTPS? 's': '')}://localhost:3000`
 export const STATUS_SITE_URL = process.env.STATUS_SITE ?? `http${(USE_HTTPS? 's': '')}://localhost:3051/dashboard/3`
 export const SITE_TITLE = process.env.SITE_TITLE ?? "ARC UNITY"
