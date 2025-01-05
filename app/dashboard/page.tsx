@@ -12,8 +12,6 @@ import { ProfilePage } from "@/components/unity/profile/ProfilePage"
 
 export default function Page() {
 
-
-
   return (
     <main>
       <header className="flex h-16 shrink-0 items-center gap-2">

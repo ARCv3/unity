@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   
   const default_guilds : GuildResponseStripped[] = [];
   const [guilds, setGuilds] = React.useState(default_guilds)
-  
+
   const { consts, actions } = useBackend();
 
   React.useEffect(() => {

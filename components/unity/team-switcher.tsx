@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useBackend } from "@/hooks/use-backend"
 import { useGlobalState } from "@/hooks/use-global-state"
+import { useSearchParams } from "next/navigation"
 
 const SIDEBAR_COOKIE_NAME = "sidebar-guild"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -43,7 +44,11 @@ export function TeamSwitcher({
   cTeam: string | null;
 }) {
 
-  const defaultOpen = cTeam? {id: cTeam} : EMPTY_GUILD_RESPONSE;
+  const searchParams = useSearchParams();
+  const paramGuild = searchParams.get("guild");
+
+  const defaultOpen = paramGuild? {id: paramGuild} : 
+    (cTeam? {id: cTeam} : EMPTY_GUILD_RESPONSE);
 
   const { isMobile } = useSidebar()
   const [activeTeam, setActiveTeam] = React.useState(defaultOpen)
@@ -52,8 +57,10 @@ export function TeamSwitcher({
 
   const { hooks, actions, utils} = useBackend(false)
 
-
   React.useEffect(() => {
+
+    if (paramGuild)
+      setCookie(SIDEBAR_COOKIE_NAME, paramGuild, {expires: new Date(Date.now() + SIDEBAR_COOKIE_MAX_AGE), path: "/"})
     
     hooks.setIsTest(test);
     

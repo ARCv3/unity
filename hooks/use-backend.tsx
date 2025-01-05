@@ -4,6 +4,7 @@ import * as React from "react"
 
 import axios from 'axios'
 import { useRouter } from "next/navigation";
+import { getCookie, setCookie } from "cookies-next";
 
 export function useBackend(init:boolean = true) {
     
@@ -72,7 +73,7 @@ export function useBackend(init:boolean = true) {
         const res = await axios.get(req_uri);
 
         if (req_uri !== res.request.responseURL) { 
-            push(res.request.responseURL);
+
             return DEFAULT_USER_RESPONSE;
         }
 
@@ -80,7 +81,7 @@ export function useBackend(init:boolean = true) {
     }, [isTest])
 
     const redirectAuthLogin = React.useCallback(() => {
-
+        
         push(`${API_BASE_URL}/auth/discord`)
         
     }, [push])
