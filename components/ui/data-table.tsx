@@ -11,8 +11,6 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  OnChangeFn,
-  RowSelectionState
 } from "@tanstack/react-table"
 
 import {
@@ -34,9 +32,8 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Button } from "./button"
-import React, { Dispatch, SetStateAction, useEffect } from "react"
+import React, {useEffect } from "react"
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu"
-import { UserNotesTableData } from "../unity/notes/columns"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -55,8 +52,7 @@ export function DataTable<TData, TValue>({
     []
   )
   const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] =
-  React.useState<VisibilityState>({username: false})
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({username: false})
 
   const table = useReactTable({
     data,

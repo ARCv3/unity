@@ -5,7 +5,6 @@ import { useGlobalState } from "@/hooks/use-global-state";
 import { transformNotesResponse, UserResponse } from "@/lib/definitions";
 import { UserNotesTableColumns, UserNotesTableData } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
-import { Table } from "@tanstack/react-table";
 import { NotesDisplay } from "./notes-display";
 
 export default function UserNotes() {

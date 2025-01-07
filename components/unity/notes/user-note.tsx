@@ -1,5 +1,4 @@
 import { DEFAULT_USER_RESPONSE, Note } from "@/lib/definitions"
-import UserColumn from "./user-column"
 import { timeAgo } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import { useBackend } from "@/hooks/use-backend"

@@ -44,7 +44,7 @@ export function NotesDisplay( {
 
     {
       notes.map(x => {
-        return <UserNote note={x} />
+        return <UserNote key={x._id} note={x} />
       })
     }
 
