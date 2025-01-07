@@ -3,12 +3,12 @@ import { ArrowDownRight, ClockArrowUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useBackend } from "@/hooks/use-backend";
 import { SITE_DESCRIPTION, SITE_HERO_IMAGE, SITE_TITLE } from "@/lib/definitions";
+import { useRedirects } from "@/hooks/use-redirects";
 
 export default function Hero() {
 
-  const {actions} = useBackend(false);
+  const actions = useRedirects()
 
   return (
     <section className="py-10">

@@ -16,7 +16,7 @@ export function MemberLabel({
     { 
       placement === "left" && 
       <div className="grid flex-1 text-left text-sm leading-tight">
-        <span className="truncate text-lg font-semibold">{user.global_name}</span>
+        <span className="truncate text-lg font-semibold">{user.username}</span>
       </div>
     }
     <div>

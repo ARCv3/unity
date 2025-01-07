@@ -34,3 +34,21 @@ export function timeAgo(prevDate: number) {
 export function isEmptyOrSpaces(str: string){
     return str && (str.match(/^ *$/) !== null)
 }
+
+export function multiFetch<T,Y>(collection: Y[], action: (x: Y) => Promise<T> ) : () => Promise<T[]> {
+ 
+    const multiFetchFunction  = async () => {
+  
+      const promises : Promise<T>[] = []
+    
+      collection.forEach( x => {
+        promises.push(action(x));
+      })
+    
+      return Promise.all(promises);
+    
+    }
+  
+    return multiFetchFunction;
+  
+  }

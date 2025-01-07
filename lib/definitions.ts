@@ -117,6 +117,58 @@ export const DEFAULT_TRANSCRIPT = {
   "comment": false
 }
 
+export function transformNotesResponse (notes: Note[]) {
+
+  const result = Object.groupBy(notes, ({usersnowflake}) => {
+    return usersnowflake;
+  });
+
+  if (result !== undefined) {
+    const final = []
+    for (const id in result) {
+      final.push(new UserNotes(result[id]??[]))
+    }
+
+    return final;  
+  }
+
+  return []
+
+}
+
+export class UserNotes {
+  notes: Note[];
+  guildSnowflake: string;
+  userSnowflake: string;
+
+  constructor(notes: Note[]) {
+    this.notes = notes;
+
+    if (notes.length > 0) {
+      this.guildSnowflake = notes[0].guildsnowflake;
+      this.userSnowflake = notes[0].usersnowflake;
+    } else {
+      this.guildSnowflake = ""
+      this.userSnowflake = ""
+    }
+  }
+
+  noteCount() {
+    return this.notes.length;
+  }
+
+  getLatestNote() {
+
+    return this.notes.reduce((a: Note, b: Note) => {
+      return new Date(a.date) > new Date(b.date)? a : b;
+    })
+
+  }
+
+
+
+}
+
 export class Transcripts {
   
   messages: Transcript[];

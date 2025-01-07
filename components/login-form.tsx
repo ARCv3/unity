@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useBackend } from "@/hooks/use-backend"
+import { useRedirects } from "@/hooks/use-redirects";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   
-  const { actions } = useBackend(false);
+  const actions = useRedirects();
 
   return (
 

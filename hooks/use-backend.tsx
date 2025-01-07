@@ -1,16 +1,14 @@
 
-import { API_BASE_URL, STATUS_SITE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Note, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
-import { useRouter } from "next/navigation";
-import { getCookie, setCookie } from "cookies-next";
+
 
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
-    const { push } = useRouter();
 
     const fetchGuild = async (id: string) : Promise<GuildResponse> => {
 
@@ -80,25 +78,30 @@ export function useBackend(init:boolean = true) {
         return res.data;
     }, [isTest])
 
-    const redirectAuthLogin = React.useCallback(() => {
-        
-        push(`${API_BASE_URL}/auth/discord`)
-        
-    }, [push])
+    const fetchNotes = async(guildid: string, userid: string) : Promise<Note[]> => {
 
-    const redirectStatus = React.useCallback(() => {
+        if (isTest) {
+            return []
+        }
 
-        push(`${STATUS_SITE_URL}`)
-        
-    }, [push])
+        const req_uri = `${API_BASE_URL}/api/notes/${guildid}/${userid}`;
+        const res = await axios.get(req_uri);
 
-    const redirectDash = React.useCallback(() => {
+        return res.data;
+    }
 
-        push(`dashboard`)
-        
-    }, [push])
+    const fetchAllGuildNotes = async(guildid: string) : Promise<Note[]> => {
 
+        if (isTest) {
+            return [];
+        }
 
+        const req_uri = `${API_BASE_URL}/api/notes/${guildid}/all`;
+        const res  = await axios.get(req_uri);
+
+        return res.data;
+
+    }
 
     const fetchMyGuilds = async() : Promise<GuildResponseStripped[]> => {
         if (isTest) {
@@ -164,9 +167,8 @@ export function useBackend(init:boolean = true) {
             fetchGuildTranscripts,
             fetchTranscriptMessages,
             fetchTranscriptMessagesGuildId,
-            redirectAuthLogin,
-            redirectStatus,
-            redirectDash
+            fetchAllGuildNotes,
+            fetchNotes
         },
         utils: {
             getIconUrl,
