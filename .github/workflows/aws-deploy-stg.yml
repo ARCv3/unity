@@ -49,6 +49,11 @@ jobs:
           ECR_REPOSITORY: "arc-api-repo"
           IMAGE_TAG: ${{ github.sha }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          PORT: ${{ secrets.PORT }}
+          UNITY_DEBUG: ${{ secrets.UNITY_DEBUG }}
+          UNITY_BASE_URI: ${{ secrets.UNITY_BASE_URI }}
+          UNITY_API_BASE_URI: ${{ secrets.UNITY_API_BASE_URI }}
+          USE_HTTPS: ${{ secrets.USE_HTTPS }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
