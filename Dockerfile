@@ -4,12 +4,12 @@ RUN apt-get update && apt-get install -y npm
 WORKDIR /app
 
 COPY ./package*.json .
-RUN node --max-old-space-size=1000 $(which npm) i
+
+RUN node $(which npm) i
 
 COPY . .
-RUN node --max-old-space-size=1000 $(which npm) run build
+RUN node  $(which npm) run build
 
-EXPOSE 443
+EXPOSE 80
 
 ENTRYPOINT [ "npm", "run", "start" ]
-
