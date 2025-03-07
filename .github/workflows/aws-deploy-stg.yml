@@ -77,9 +77,10 @@ jobs:
           env-variables: "${{ toJson(env) }}"
         env:
           PORT: ${{ secrets.PORT }}
-          UNITY_DEBUG: ${{ secrets.DEBUG }}
+          UNITY_DEBUG: ${{ secrets.UNITY_DEBUG }}
           UNITY_BASE_URI: ${{ secrets.UNITY_BASE_URI }}
           UNITY_API_BASE_URI: ${{ secrets.UNITY_API_BASE_URI }}
+          USE_HTTPS: ${{ secrets.USE_HTTPS }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
