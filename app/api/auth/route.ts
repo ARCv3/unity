@@ -6,8 +6,6 @@ export async function GET(request: NextRequest) {
     const token = request.nextUrl.searchParams.get("token");
     const expiry = request.nextUrl.searchParams.get("expiry")?? "100000";
 
-    console.log(token)
-
     if (!token) {
         return NextResponse.json({
             status: 500

@@ -55,7 +55,7 @@ export function TeamSwitcher({
   
   const { guild, setGuild } = useSelectedGuildState()
 
-  const { hooks, actions, utils} = useBackend(false)
+  const { hooks, actions, utils, consts} = useBackend(false)
 
   React.useEffect(() => {
 
@@ -64,13 +64,13 @@ export function TeamSwitcher({
     
     hooks.setIsTest(test);
     
-    if (activeTeam.id)
+    if (activeTeam.id && consts.token)
         actions.fetchGuild(activeTeam.id).then( (data) => {
             setGuild(data)
         });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTeam])
+  }, [activeTeam, consts.token])
 
   return (
     <SidebarMenu>

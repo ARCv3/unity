@@ -14,21 +14,21 @@ export function TranscriptView({
 
   const default_messages : Transcripts = new Transcripts([]);
 
-  const { utils, actions } = useBackend(false);
+  const { utils, actions, consts } = useBackend(false);
   const { guild } = useSelectedGuildState();
   
   const [messages, setMessages] = useState(default_messages)
 
   useEffect(() => {
     
-    if (guild.id !== "") {
+    if (guild.id !== "" && consts.token) {
       actions.fetchTranscriptMessagesGuildId(guild.id, id).then(x => {
         setMessages(x)
       })
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guild.id, id])
+  }, [guild.id, id, consts.token])
 
 
   const renderMessages = useCallback(() => {

@@ -5,22 +5,28 @@ import * as React from "react"
 import axios from 'axios'
 import {useAuthToken} from '@/hooks/use-auth-token'
 
-
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
     const { token } = useAuthToken();
 
-    const fetchGuild = async (id: string) : Promise<GuildResponse> => {
+    const get = React.useCallback(async (req_uri: string) => await axios.get(req_uri, {
+        headers: {
+            'Authorization': token
+        }
+    }), [token])
+
+    const fetchGuild = React.useCallback(async (id: string) : Promise<GuildResponse> => {
 
         if (isTest) {
             return DEFAULT_GUILD_RESPONSE;
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/discord/guilds/${id}`);
+        const res = await get(`${API_BASE_URL}/api/discord/guilds/${id}`);
         return res.data;
-    } 
+
+    }, [get, isTest] )
 
     const fetchGuildTranscripts = React.useCallback(async (id: string): Promise<TranscriptsResponse[]> => {
 
@@ -28,10 +34,10 @@ export function useBackend(init:boolean = true) {
             return [DEFAULT_TRANSCRIPT_RESPONSE];
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${id}`);
+        const res = await get(`${API_BASE_URL}/api/transcripts/${id}`);
         return res.data;
 
-    }, [isTest])
+    }, [isTest, get])
 
     const fetchTranscriptMessages = React.useCallback(async (transcript: TranscriptsResponse): Promise<Transcripts> => {
         
@@ -39,10 +45,10 @@ export function useBackend(init:boolean = true) {
             return new Transcripts([DEFAULT_TRANSCRIPT])
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${transcript.GuildSnowflake}/${transcript.modmailId}`)
+        const res = await get(`${API_BASE_URL}/api/transcripts/${transcript.GuildSnowflake}/${transcript.modmailId}`)
         return  res.data;
 
-    }, [isTest])
+    }, [isTest, get])
 
     const fetchTranscriptMessagesGuildId = React.useCallback(async (guildid: string, transcriptID: string): Promise<Transcripts> => {
         
@@ -50,31 +56,29 @@ export function useBackend(init:boolean = true) {
             return new Transcripts([DEFAULT_TRANSCRIPT])
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/transcripts/${guildid}/${transcriptID}`)
+        const res = await get(`${API_BASE_URL}/api/transcripts/${guildid}/${transcriptID}`)
         return new Transcripts(res.data);
 
-    }, [isTest])
+    }, [isTest, get])
 
     const fetchUser = React.useCallback(async (id: string): Promise<UserResponse> => {
         if (isTest) {
             return DEFAULT_USER_RESPONSE;
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/discord/users/${id}`);
+        const res = await get(`${API_BASE_URL}/api/discord/users/${id}`);
+   
         return res.data;
-    }, [isTest])
+        
+    }, [isTest, get])
 
     const fetchMe =  React.useCallback(async () : Promise<UserResponse> => {
         if (isTest) {
             return DEFAULT_USER_RESPONSE;
         }
 
-        const req_uri = `${API_BASE_URL}/v2/api/discord/me`
-        const res = await axios.get(req_uri, {
-            headers: {
-                'Authorization': token
-            }
-        });
+        const req_uri = `${API_BASE_URL}/api/discord/me`
+        const res = await get(req_uri);
 
         if (req_uri !== res.request.responseURL) { 
 
@@ -82,19 +86,19 @@ export function useBackend(init:boolean = true) {
         }
 
         return res.data;
-    }, [isTest, token])
+    }, [isTest, get])
 
-    const fetchNotes = async(guildid: string, userid: string) : Promise<Note[]> => {
+    const fetchNotes = React.useCallback( async(guildid: string, userid: string) : Promise<Note[]> => {
 
         if (isTest) {
             return []
         }
 
         const req_uri = `${API_BASE_URL}/api/notes/${guildid}/${userid}`;
-        const res = await axios.get(req_uri);
+        const res = await get(req_uri);
 
         return res.data;
-    }
+    }, [isTest, get])
 
     const fetchAllGuildNotes = async(guildid: string) : Promise<Note[]> => {
 
@@ -103,31 +107,32 @@ export function useBackend(init:boolean = true) {
         }
 
         const req_uri = `${API_BASE_URL}/api/notes/${guildid}/all`;
-        const res  = await axios.get(req_uri);
+        const res  = await get(req_uri);
 
         return res.data;
 
     }
 
-    const fetchMyGuilds = async() : Promise<GuildResponseStripped[]> => {
+    const fetchMyGuilds = React.useCallback(async() : Promise<GuildResponseStripped[]> => {
         if (isTest) {
             return [DEFAULT_GUILD_RESP_STRIPPED]
         }
-        const res = await axios.get(`${API_BASE_URL}/api/discord/me/guilds`);
+        
+        const res = await get(`${API_BASE_URL}/api/discord/me/guilds`);
 
 
         if (typeof res.data  === "string")
             return []
 
         return res.data
-    }
+    }, [isTest, get])
 
     const fetchInsights = async(guildData: GuildResponse) : Promise<Insight[]> => {
         if (isTest) {
             return []
         }
 
-        const res = await axios.get(`${API_BASE_URL}/api/insights?guildid=${guildData.id}`)
+        const res = await get(`${API_BASE_URL}/api/insights?guildid=${guildData.id}`)
 
         if (typeof res.data  === "string")
             return []
@@ -147,11 +152,8 @@ export function useBackend(init:boolean = true) {
 
     React.useEffect(() => {
 
-
-
         if (init && token) {
 
-            console.log(token)
             fetchMe().then(x => {
                 setMe(x)
             })
@@ -161,7 +163,8 @@ export function useBackend(init:boolean = true) {
 
     return {
         consts : {
-            me
+            me,
+            token
         },
         hooks : {
             isTest,
