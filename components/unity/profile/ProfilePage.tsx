@@ -15,7 +15,6 @@ export function ProfilePage({
   const [user, setUser] = useState(consts.me)
 
   useEffect(() => {
-
     hooks.setIsTest(test)
     setUser(consts.me);
   // eslint-disable-next-line react-hooks/exhaustive-deps

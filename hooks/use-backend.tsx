@@ -3,12 +3,14 @@ import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFA
 import * as React from "react"
 
 import axios from 'axios'
+import {useAuthToken} from '@/hooks/use-auth-token'
 
 
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
+    const { token } = useAuthToken();
 
     const fetchGuild = async (id: string) : Promise<GuildResponse> => {
 
@@ -68,7 +70,11 @@ export function useBackend(init:boolean = true) {
         }
 
         const req_uri = `${API_BASE_URL}/v2/api/discord/me`
-        const res = await axios.get(req_uri);
+        const res = await axios.get(req_uri, {
+            headers: {
+                'Authorization': token
+            }
+        });
 
         if (req_uri !== res.request.responseURL) { 
 
@@ -76,7 +82,7 @@ export function useBackend(init:boolean = true) {
         }
 
         return res.data;
-    }, [isTest])
+    }, [isTest, token])
 
     const fetchNotes = async(guildid: string, userid: string) : Promise<Note[]> => {
 
@@ -141,13 +147,17 @@ export function useBackend(init:boolean = true) {
 
     React.useEffect(() => {
 
-        if (init) {
+
+
+        if (init && token) {
+
+            console.log(token)
             fetchMe().then(x => {
                 setMe(x)
             })
         }
 
-    }, [fetchMe, init])
+    }, [fetchMe, init, token])
 
     return {
         consts : {

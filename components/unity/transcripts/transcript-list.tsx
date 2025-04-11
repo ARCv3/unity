@@ -2,7 +2,7 @@
 
 import { TableCell, TableRow } from "@/components/ui/table"
 import { useBackend } from "@/hooks/use-backend"
-import { useGlobalState } from "@/hooks/use-global-state";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
 import { DEFAULT_USER_RESPONSE, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import { timeAgo } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ export function TranscriptList() {
 
   const [transcripts, setTranscripts] = useState(default_transcript_list)
 
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
   
   useEffect(() => {
 

@@ -85,7 +85,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <a href="/auth/revoke">
+            <a href="api/revoke">
               <DropdownMenuItem>
                 <LogOut />
       

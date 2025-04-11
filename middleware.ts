@@ -5,19 +5,26 @@ export function middleware(req: NextRequest) {
 
   const session = req.cookies.get("session");
 
-  if (session) {
-    return  NextResponse.next();
+  let token = undefined;
+
+  if (session && session.value !== '') {
+    token = session.value;
   }
 
-  const base_uri : string = process.env.UNITY_BASE_URI?? "localhost:3000";
-  const redirect = NextResponse.redirect(new URL('/login', req.url));
+  if (req.nextUrl.pathname == '/login' && token) {
+    const redirect = NextResponse.redirect(new URL('/dashboard', req.url));
+    return redirect;
+  }
 
-  redirect.cookies.set("src", req.url.split(base_uri)[1])
+  if (req.nextUrl.pathname.startsWith('/dashboard') && !token) {
+    const redirect = NextResponse.redirect(new URL('/login', req.url));
+    return redirect;
+  }
 
-  return redirect;
+  return NextResponse.next();
 
 }
 
 export const config = {
-  matcher: '/dashboard/:path*'
+  matcher: '/:path*'
 }

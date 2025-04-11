@@ -17,6 +17,4 @@ const nextConfig = {
     
 };
 
-console.log(process.env.UNITY_API_BASE_URI )
-
 export default nextConfig;

@@ -3,7 +3,7 @@
 import { useBackend } from "@/hooks/use-backend"
 import { useEffect, useState } from "react"
 import { InsightCard } from "./insight-card";
-import { useGlobalState } from "@/hooks/use-global-state";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
 import {Insight} from "@/lib/definitions";
 
 export function InsightList(
@@ -13,7 +13,7 @@ export function InsightList(
   const emptyInsightList : Insight[] = []
   const { actions } = useBackend(false)
   const [insights, setInsights] = useState(emptyInsightList)
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
 
   useEffect(() => {
     

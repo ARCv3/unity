@@ -483,6 +483,7 @@ export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
 }
 
 export const USE_HTTPS = process.env.USE_HTTPS === "true"
+export const BASE_URI = process.env.UNITY_BASE_URI
 export const API_BASE_URL = `http${(USE_HTTPS? 's': '')}://${process.env.UNITY_API_BASE_URI}`
 export const STATUS_SITE_URL = process.env.STATUS_SITE_URL ?? `http${(USE_HTTPS? 's': '')}://localhost:3051/dashboard/3`
 export const SITE_TITLE = process.env.SITE_TITLE ?? "ARC UNITY"
@@ -491,4 +492,3 @@ export const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION?? `Lorem ipsum dolo
               doloremque mollitia fugiat omnis! Porro facilis quo animi
               consequatur. Explicabo.`
 export const SITE_HERO_IMAGE = process.env.SITE_HERO_IMAGE?? "https://shadcnblocks.com/images/block/placeholder-1.svg"
-console.log(process.env.UNITY_API_BASE_URI )

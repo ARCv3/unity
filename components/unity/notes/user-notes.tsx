@@ -1,7 +1,7 @@
 "use client"
 import { useBackend } from "@/hooks/use-backend";
 import { useEffect, useState } from "react";
-import { useGlobalState } from "@/hooks/use-global-state";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
 import { transformNotesResponse, UserResponse } from "@/lib/definitions";
 import { UserNotesTableColumns, UserNotesTableData } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
@@ -12,7 +12,7 @@ export default function UserNotes() {
   const { actions } = useBackend(false);
   const notes : UserNotesTableData[] = [];
   const [notedata , setnoteData] = useState(notes);
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
 
   const usersList : string[] = []
   const [selectedUsers, setSelectedUsers] = useState(usersList)
