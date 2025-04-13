@@ -1,5 +1,5 @@
 "use client"
- 
+
 import { Application } from "@/lib/definitions"
 import UserColumn from "../notes/user-column"
 import { timeAgo } from "@/lib/utils"

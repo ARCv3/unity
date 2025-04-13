@@ -2,11 +2,13 @@
 
 import { DataTable } from "@/components/ui/data-table";
 import { useBackend } from "@/hooks/use-backend";
+
 import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
 import { Application, EMPTY_GUILD_RESPONSE, UserResponse } from "@/lib/definitions";
 import { useEffect, useState } from "react";
 import { ApplicationsTableColumns, ApplicationsTableData } from "./columns";
 import ApplicationsDisplay from "./application-display";
+
 
 export function ApplicationsList({
      
@@ -51,6 +53,7 @@ export function ApplicationsList({
                             const tableData : ApplicationsTableData = {
                                 userid: user.id,
                                 username: user.username,
+
                                 approvals: x.filter(y=>y.userSnowflake == user.id)
                             }
 
@@ -66,8 +69,8 @@ export function ApplicationsList({
 
         }
  
-    }, [actions, consts.token, guild])
 
+    }, [actions, consts.token, guild])
 
     return (
         <div className="flex max-md:flex-col rounded-lg m-4">

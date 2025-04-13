@@ -31,6 +31,7 @@ export function TranscriptList() {
     if (consts.token && guild !== EMPTY_GUILD_RESPONSE)
       actions.fetchGuildTranscripts(guild.id).then( x => {
         setTranscripts(x);
+
       }).catch(() => {
 
         setTranscripts([])
