@@ -91,16 +91,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const default_guilds : GuildResponseStripped[] = [];
   const [guilds, setGuilds] = React.useState(default_guilds)
 
-  const { consts, actions } = useBackend();
+  const { consts, actions} = useBackend();
 
   React.useEffect(() => {
-    if (consts.me) {
+    if (consts.me && consts.token) {
+    
       actions.fetchMyGuilds().then(x => {
         setGuilds(x);
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [consts.token])
   
   return (
     <Sidebar variant="inset" {...props}>

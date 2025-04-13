@@ -1,0 +1,15 @@
+{
+    "configurations": [
+
+        {
+            "name": "dev (1)",
+            "type": "npm",
+            "workingDir": "$PROJECT_DIR$",
+            "command": "run",
+            "scripts": "dev",
+            "environment": {
+                "PORT": "3030"
+            }
+        }
+    ]
+}

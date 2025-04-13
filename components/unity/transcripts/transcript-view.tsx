@@ -1,7 +1,7 @@
 "use client"
 
 import { useBackend } from "@/hooks/use-backend"
-import { useGlobalState } from "@/hooks/use-global-state";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
 import { Transcripts } from "@/lib/definitions";
 import { useCallback, useEffect, useState } from "react";
 import { TranscriptMessage } from "./transcript-message";
@@ -14,21 +14,21 @@ export function TranscriptView({
 
   const default_messages : Transcripts = new Transcripts([]);
 
-  const { utils, actions } = useBackend(false);
-  const { guild } = useGlobalState();
+  const { utils, actions, consts } = useBackend(false);
+  const { guild } = useSelectedGuildState();
   
   const [messages, setMessages] = useState(default_messages)
 
   useEffect(() => {
     
-    if (guild.id !== "") {
+    if (guild.id !== "" && consts.token) {
       actions.fetchTranscriptMessagesGuildId(guild.id, id).then(x => {
         setMessages(x)
       })
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guild.id, id])
+  }, [guild.id, id, consts.token])
 
 
   const renderMessages = useCallback(() => {

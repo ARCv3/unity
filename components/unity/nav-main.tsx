@@ -18,7 +18,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { useCallback } from "react"
-import { useGlobalState } from "@/hooks/use-global-state"
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state"
 import { EMPTY_GUILD_RESPONSE } from "@/lib/definitions"
 
 
@@ -38,7 +38,7 @@ export function NavMain({
   items: navMainItemSchema[]
 }) {
 
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
 
   return (
     <SidebarGroup>

@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_TITLE, SITE_DESCRIPTION_META } from "@/lib/definitions";
 
+import { cookies } from "next/headers";
+import {Auth} from "@/components/auth";
+
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,16 +23,21 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION_META,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const cookieStore = await cookies()
+  const token = cookieStore.get('session')?.value?? "";
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark antialiased w-full h-full`}
       >
+        <Auth token={token} />
         {children}
       </body>
     </html>

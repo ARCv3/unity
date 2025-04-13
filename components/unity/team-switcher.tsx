@@ -28,7 +28,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useBackend } from "@/hooks/use-backend"
-import { useGlobalState } from "@/hooks/use-global-state"
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state"
 import { useSearchParams } from "next/navigation"
 
 const SIDEBAR_COOKIE_NAME = "sidebar-guild"
@@ -53,9 +53,9 @@ export function TeamSwitcher({
   const { isMobile } = useSidebar()
   const [activeTeam, setActiveTeam] = React.useState(defaultOpen)
   
-  const { guild, setGuild } = useGlobalState()
+  const { guild, setGuild } = useSelectedGuildState()
 
-  const { hooks, actions, utils} = useBackend(false)
+  const { hooks, actions, utils, consts} = useBackend(false)
 
   React.useEffect(() => {
 
@@ -64,13 +64,13 @@ export function TeamSwitcher({
     
     hooks.setIsTest(test);
     
-    if (activeTeam.id)
+    if (activeTeam.id && consts.token)
         actions.fetchGuild(activeTeam.id).then( (data) => {
             setGuild(data)
         });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTeam])
+  }, [activeTeam, consts.token])
 
   return (
     <SidebarMenu>

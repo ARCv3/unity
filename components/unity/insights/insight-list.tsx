@@ -3,26 +3,27 @@
 import { useBackend } from "@/hooks/use-backend"
 import { useEffect, useState } from "react"
 import { InsightCard } from "./insight-card";
-import { useGlobalState } from "@/hooks/use-global-state";
-import {Insight} from "@/lib/definitions";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
+import {EMPTY_GUILD_RESPONSE, Insight} from "@/lib/definitions";
 
 export function InsightList(
 
 ) {
 
   const emptyInsightList : Insight[] = []
-  const { actions } = useBackend(false)
+  const { actions, consts} = useBackend(false)
   const [insights, setInsights] = useState(emptyInsightList)
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
 
   useEffect(() => {
     
-    actions.fetchInsights(guild).then( x => {
-      setInsights(x)
-    });
+    if (consts.token && guild !== EMPTY_GUILD_RESPONSE)
+      actions.fetchInsights(guild).then( x => {
+        setInsights(x)
+      });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guild]);
+  }, [guild, consts.token]);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

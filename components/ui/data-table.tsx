@@ -38,13 +38,15 @@ import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  onRowSelectionChange: (data: string[]) => void
+  onRowSelectionChange: (data: string[]) => void,
+  multipleSelection?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onRowSelectionChange
+  onRowSelectionChange,
+  multipleSelection = true
 }: DataTableProps<TData, TValue>) {
 
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -65,6 +67,7 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    enableMultiRowSelection: multipleSelection,
     state: {
       sorting,
       columnFilters,

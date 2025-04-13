@@ -24,10 +24,14 @@ export function useRedirects() {
       
   }, [push])
 
+  const redirectLogin = React.useCallback(() => {
+    push(`login`)
+  }, [push])
   return {
     redirectAuthLogin,
     redirectStatus,
-    redirectDash
+    redirectDash,
+    redirectLogin
   }
 
 }

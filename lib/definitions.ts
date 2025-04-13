@@ -13,6 +13,7 @@ export type Application = {
   submitDate: string;
   experience: string;
   position: string;
+  server: string;
   botexp: string;
   avail: string;
   message: string;
@@ -20,6 +21,55 @@ export type Application = {
   age: string;
   joindate: string;
 }
+
+export type Approval = {
+  guildSnowflake: string;
+  userSnowflake: string;
+  authorSnowflake: string;
+  date: string;
+}
+
+
+export const DEFAULT_APPROVAL : Approval = {
+  "guildSnowflake": "569929112932712469",
+  "userSnowflake": "1235341250782302312",
+  authorSnowflake: "393165866285662208",
+  date: "1738798549229"
+}
+
+export const DEFAULT_APPLICATION : Application = {
+  "guildSnowflake": "569929112932712469",
+  "userSnowflake": "1235341250782302312",
+  "submitDate": "1738798549229",
+  "experience": "no",
+  "position": "no exp",
+  "server": "N/A",
+  "botexp": "moderation experience",
+  "avail": "Everyday before and after school and work GMT+1 ",
+  "message": "I want to make a positive impact on the server and give a part of myself to this server! I really like the members and I love to talk with the people. I would love to learn more about the server and moderating. I want to make the server a safe place for everyone and let them know that they are accepted in the server.",
+  "about": "I study in Amsterdam and I follow the study CMD (Communication and Multimedia Design) Its coding websites and designing everything that has an interface. The communication part is about putting the user at number one and making sure the user is happy. I like to play many games like Fortnite, Minecraft, Stardew Valley, Sims 4, Roblox and so much more. I like to go on runs and go to the gym as well and ofcourse I like to design. I live for music :)",
+  "age": "19",
+  "joindate": "2018"
+}
+
+
+export const EMPTY_APPLICATION = {
+  "_id": "234",
+  "guildSnowflake": "234",
+  "userSnowflake": "234",
+  "submitDate": "1738798549229",
+  "experience": "no",
+  "position": "no exp",
+  "server": "N/A",
+  "botexp": "moderation experience",
+  "avail": "Everyday before and after school and work GMT+1 ",
+  "message": "",
+  "about": "",
+  "age": "",
+  "joindate": ""
+}
+
+
 
 export type UserData = {
   _id: string;
@@ -348,6 +398,7 @@ export type TranscriptsResponse = {
   date: string;
 }
 
+
 export const DEFAULT_TRANSCRIPT_RESPONSE : TranscriptsResponse = {
   "modmailId": "dfc39eea-96c6-4173-be67-3e895fdd23a7",
   "transcripttype": "Jail",
@@ -483,7 +534,8 @@ export const DEFAULT_GUILD_RESPONSE : GuildResponse = {
 }
 
 export const USE_HTTPS = process.env.USE_HTTPS === "true"
-export const API_BASE_URL = `http${(USE_HTTPS? 's': '')}://${process.env.UNITY_API_BASE_URI}`
+export const BASE_URI = process.env.UNITY_BASE_URI
+export const API_BASE_URL = `http${(USE_HTTPS? 's': '')}://${process.env.UNITY_API_BASE_URI}/v2`
 export const STATUS_SITE_URL = process.env.STATUS_SITE_URL ?? `http${(USE_HTTPS? 's': '')}://localhost:3051/dashboard/3`
 export const SITE_TITLE = process.env.SITE_TITLE ?? "ARC UNITY"
 export const SITE_DESCRIPTION_META = process.env.SITE_DESCRIPTION_META?? "Arc unity dashboard dev version"

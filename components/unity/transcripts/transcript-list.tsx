@@ -2,8 +2,8 @@
 
 import { TableCell, TableRow } from "@/components/ui/table"
 import { useBackend } from "@/hooks/use-backend"
-import { useGlobalState } from "@/hooks/use-global-state";
-import { DEFAULT_USER_RESPONSE, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
+import { DEFAULT_USER_RESPONSE, EMPTY_GUILD_RESPONSE, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import { timeAgo } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -18,25 +18,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export function TranscriptList() {
   
-  const { actions } = useBackend(false);
+  const { actions, consts } = useBackend(false);
 
   const default_transcript_list : TranscriptsResponse[] = []
 
   const [transcripts, setTranscripts] = useState(default_transcript_list)
 
-  const { guild } = useGlobalState();
+  const { guild } = useSelectedGuildState();
   
   useEffect(() => {
 
-    actions.fetchGuildTranscripts(guild.id).then( x => {
-      setTranscripts(x);
-    }).catch(x => {
-      console.log(x)
-      setTranscripts([])
-    })
+    if (consts.token && guild !== EMPTY_GUILD_RESPONSE)
+      actions.fetchGuildTranscripts(guild.id).then( x => {
+        setTranscripts(x);
+      }).catch(x => {
+
+        setTranscripts([])
+      })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guild.id]);
+  }, [guild.id, consts.token]);
 
   return <>
     {transcripts.map(x => <TranscriptRow key={x.modmailId} transcript={x}/>)}
@@ -116,7 +117,7 @@ export function Participants({
     }
 
     getUsers().then((x) => {
-      console.log(x)
+
       setParticipantUsers(x);
     })
 
@@ -162,7 +163,7 @@ export function ParticipantIcons({
     }
 
     getUsers().then((x) => {
-      console.log(x)
+
       setParticipantUsers(x);
     })
 
