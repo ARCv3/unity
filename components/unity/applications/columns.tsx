@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DEFAULT_APPLICATION, DEFAULT_APPROVAL, DEFAULT_USER_RESPONSE } from "@/lib/definitions";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+
+import { ArrowUpDown } from "lucide-react";
 import UserColumn from "../notes/user-column";
 import { Approval } from "@/lib/definitions";
 import { ParticipantIcons, Participants } from "../transcripts/transcript-list";

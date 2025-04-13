@@ -2,29 +2,24 @@
 
 import { DataTable } from "@/components/ui/data-table";
 import { useBackend } from "@/hooks/use-backend";
-import { useOnceAuthenticated } from "@/hooks/use-once-authenticated";
+
 import { useSelectedGuildState } from "@/hooks/use-selected-guild-state";
-import { Application, Approval, DEFAULT_APPROVAL, EMPTY_GUILD_RESPONSE, UserResponse } from "@/lib/definitions";
+import { Application, EMPTY_GUILD_RESPONSE, UserResponse } from "@/lib/definitions";
 import { useEffect, useState } from "react";
 import { ApplicationsTableColumns, ApplicationsTableData } from "./columns";
 import ApplicationsDisplay from "./application-display";
 
-export interface ApplicationsListProps {
-
-}
 
 export function ApplicationsList({
      
-}: ApplicationsListProps ) {
+}) {
 
 
     const emptyAppList : Application[] = []
-    const emptyApprovalList : Approval[] = []
     const { actions, consts } = useBackend();
     const { guild } = useSelectedGuildState();
 
     const [applications, setApplications] = useState(emptyAppList);
-    const [applicationApprovals, setApplicationApprovals] = useState(emptyApprovalList);
     const defaultApplicatonsData : ApplicationsTableData[] = [];
     const [applicationsData, setApplicationsData] = useState(defaultApplicatonsData);
 
@@ -51,7 +46,6 @@ export function ApplicationsList({
                 }
 
                 actions.fetchGuildApplicationApproals(guild.id).then(x => {
-                    const guildApplicationsApprovals = x;
 
                     getUsers().then(users => {
                         users.forEach(user => {
@@ -59,7 +53,8 @@ export function ApplicationsList({
                             const tableData : ApplicationsTableData = {
                                 userid: user.id,
                                 username: user.username,
-                                approvals: [DEFAULT_APPROVAL]
+
+                                approvals: x.filter(y=>y.userSnowflake == user.id)
                             }
 
                             appDatas.push(tableData);
@@ -74,8 +69,8 @@ export function ApplicationsList({
 
         }
  
-    }, [consts.token, guild])
 
+    }, [actions, consts.token, guild])
 
     return (
         <div className="flex max-md:flex-col rounded-lg m-4">
