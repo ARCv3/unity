@@ -11,7 +11,7 @@ export default function UserNotes() {
  
   const { actions } = useBackend(false);
   const notes : UserNotesTableData[] = [];
-  const [notedata , setnoteData] = useState(notes);
+  const [notedata, setnoteData] = useState(notes);
   const { guild } = useSelectedGuildState();
 
   const usersList : string[] = []
@@ -52,6 +52,7 @@ export default function UserNotes() {
         })
           
         setnoteData(noteDatas)
+
       })
 
     })
@@ -70,8 +71,6 @@ export default function UserNotes() {
         <NotesDisplay users={selectedUsers} guildid={guild.id}/>
       </div>
     </div>
-
- 
   )
 
 }

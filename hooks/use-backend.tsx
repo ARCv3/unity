@@ -1,5 +1,5 @@
 
-import { API_BASE_URL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Note, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
+import { API_BASE_URL, Application, Approval, DEFAULT_APPLICATION, DEFAULT_APPROVAL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Note, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
 import axios from 'axios'
@@ -47,6 +47,27 @@ export function useBackend(init:boolean = true) {
 
         const res = await get(`${API_BASE_URL}/api/transcripts/${transcript.GuildSnowflake}/${transcript.modmailId}`)
         return  res.data;
+
+    }, [isTest, get])
+
+    const fetchGuildApplications = React.useCallback(async (id: string) : Promise<Application[]> => {
+
+        if (isTest) {
+            return [DEFAULT_APPLICATION]
+        }
+
+        const res = await get(`${API_BASE_URL}/api/applications/${id}`)
+        return res.data
+
+    }, [isTest, get])
+
+    const fetchGuildApplicationApproals = React.useCallback(async (id: string) : Promise<Approval[]> => {
+        if (isTest) {
+            return [DEFAULT_APPROVAL]
+        }
+
+        const res = await get(`${API_BASE_URL}/api/applications/${id}/approvals`);
+        return res.data;
 
     }, [isTest, get])
 
@@ -181,7 +202,9 @@ export function useBackend(init:boolean = true) {
             fetchTranscriptMessages,
             fetchTranscriptMessagesGuildId,
             fetchAllGuildNotes,
-            fetchNotes
+            fetchNotes,
+            fetchGuildApplicationApproals,
+            fetchGuildApplications,
         },
         utils: {
             getIconUrl,
