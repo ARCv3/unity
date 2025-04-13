@@ -1,6 +1,5 @@
 "use client"
-
-import { MemberLabel } from "@/components/ui/MemberLabel"
+ 
 import { Application } from "@/lib/definitions"
 import UserColumn from "../notes/user-column"
 import { timeAgo } from "@/lib/utils"
