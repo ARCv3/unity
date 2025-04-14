@@ -70,7 +70,7 @@ export function ApplicationsList({
         }
  
 
-    }, [actions, consts.token, guild])
+    }, [consts.token, guild])
 
     return (
         <div className="flex max-md:flex-col rounded-lg m-4">
