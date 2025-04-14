@@ -69,6 +69,7 @@ export function ApplicationsList({
 
         }
  
+
     }, [consts.token, guild])
 
     return (
