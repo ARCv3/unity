@@ -66,7 +66,7 @@ export function ApplicationsList({
 
         }
  
-    }, [actions, consts.token, guild])
+    }, [consts.token, guild])
 
 
     return (
