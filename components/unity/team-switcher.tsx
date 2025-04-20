@@ -111,6 +111,7 @@ export function TeamSwitcher({
                 onClick={() => {
                     setCookie(SIDEBAR_COOKIE_NAME, team.id, {expires: new Date(Date.now() + SIDEBAR_COOKIE_MAX_AGE), path: "/"})
                     setActiveTeam(team)
+                    window.location.href = '/dashboard'
                 }}
                 className="gap-2 p-2"
               >

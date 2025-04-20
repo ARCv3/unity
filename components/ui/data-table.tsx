@@ -11,6 +11,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  Row,
 } from "@tanstack/react-table"
 
 import {
@@ -39,14 +40,18 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   onRowSelectionChange: (data: string[]) => void,
-  multipleSelection?: boolean
+  multipleSelection?: boolean,
+  enableSearch?: boolean
+  onTableRowClick?: (row: Row<TData>) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onRowSelectionChange,
-  multipleSelection = true
+  multipleSelection = true,
+  enableSearch = true,
+  onTableRowClick = () => {}
 }: DataTableProps<TData, TValue>) {
 
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -88,7 +93,8 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center py-4">
-        <Input
+        {enableSearch &&
+          <Input
           placeholder="Filter users"
           value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
@@ -96,6 +102,8 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        }
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -152,7 +160,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow className="hover:cursor-pointer"
+                <TableRow onClick={() => onTableRowClick(row)} className="hover:cursor-pointer"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

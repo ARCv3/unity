@@ -78,6 +78,9 @@ export function ApplicationsList({
                 <DataTable onRowSelectionChange={(x) => {
                     setSelectedUsers(x);
                 }}
+                onTableRowClick={(row) => {
+                    row.toggleSelected();
+                }}
                 multipleSelection={false}
                 columns={ApplicationsTableColumns}
                 data={applicationsData}/>
