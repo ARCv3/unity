@@ -63,8 +63,12 @@ export default function UserNotes() {
   return (
     <div>
       <div className="container mx-auto">
-        <DataTable onRowSelectionChange={(x) => {
+        <DataTable onTableRowClick={(row) => {
+            row.toggleSelected();
+          }}
+        onRowSelectionChange={(x) => {
           setSelectedUsers(x);
+      
         }} columns={UserNotesTableColumns} data={notedata}/>
       </div>
       <div className="container mx-auto">

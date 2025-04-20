@@ -17,9 +17,9 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { useCallback } from "react"
 import { useSelectedGuildState } from "@/hooks/use-selected-guild-state"
 import { EMPTY_GUILD_RESPONSE } from "@/lib/definitions"
+import { useRedirects } from "@/hooks/use-redirects"
 
 
 export type navMainItemSchema = {
@@ -53,38 +53,32 @@ export function NavMain({
       
             ]
       
-          }} isCurrentDefault={true}/>)
+          }} />)
         }
         {
         guild !== EMPTY_GUILD_RESPONSE && 
         items.map((item) => (
-          <NavMainItem key={item.url} item={item} isCurrentDefault={false} />
+          <NavMainItem key={item.url} item={item} />
         ))}
       </SidebarMenu>
     </SidebarGroup>
   )
 }
 
-function NavMainItem({item, isCurrentDefault} : {
-  item: navMainItemSchema,
-  isCurrentDefault: boolean
+function NavMainItem({item} : {
+  item: navMainItemSchema
 }) {
 
-  const isCurrent = useCallback((item : navMainItemSchema) : boolean => {
-    if (typeof window !== 'undefined')
-      return window.location.pathname == item.url;
-    return isCurrentDefault;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+  const { redirect } = useRedirects();
 
   return <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
   <SidebarMenuItem>
-    <SidebarMenuButton style={isCurrent(item)? {backgroundColor: "hsl(var(--sidebar-accent))"} :  {}} asChild tooltip={item.title}>
-      <a href={item.url}>
+    <SidebarMenuButton asChild tooltip={item.title}>
+      <div onClick={() => redirect(item.url)}>
         <item.icon />
         <span>{item.title}</span>
-      </a>
+      </div>
     </SidebarMenuButton>
     {item.items?.length ? (
       <>
@@ -99,9 +93,9 @@ function NavMainItem({item, isCurrentDefault} : {
             {item.items?.map((subItem) => (
               <SidebarMenuSubItem key={subItem.title}>
                 <SidebarMenuSubButton asChild>
-                  <a href={subItem.url}>
+                  <div onClick={() => redirect(subItem.url)}>
                     <span>{subItem.title}</span>
-                  </a>
+                  </div>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             ))}

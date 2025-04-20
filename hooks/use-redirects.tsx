@@ -12,6 +12,14 @@ export function useRedirects() {
       
   }, [push])
 
+  const redirectTranscript = React.useCallback((id: string) => {
+    push(`/dashboard/transcripts/${id}`)
+  }, [push])
+
+  const redirect = React.useCallback((url: string) => {
+    push(url);
+  }, [push])
+
   const redirectStatus = React.useCallback(() => {
 
     push(`${STATUS_SITE_URL}`)
@@ -29,6 +37,8 @@ export function useRedirects() {
   }, [push])
   return {
     redirectAuthLogin,
+    redirectTranscript,
+    redirect,
     redirectStatus,
     redirectDash,
     redirectLogin

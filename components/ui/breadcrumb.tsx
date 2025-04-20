@@ -1,8 +1,11 @@
+"use client";
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useRedirects } from "@/hooks/use-redirects"
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -41,15 +44,19 @@ BreadcrumbItem.displayName = "BreadcrumbItem"
 
 const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & {
-    asChild?: boolean
+  React.ComponentPropsWithoutRef<"div"> & {
+    asChild?: boolean,
+    href: string,
   }
->(({ asChild, className, ...props }, ref) => {
-  const Comp = asChild ? Slot : "a"
+>(({ asChild, className, href, ...props}) => {
+  const Comp = asChild ? Slot : "div"
+  const { redirect } = useRedirects()
 
   return (
     <Comp
-      ref={ref}
+      onClick={() => {
+        redirect(href)
+      }}
       className={cn("transition-colors hover:text-foreground", className)}
       {...props}
     />

@@ -11,15 +11,7 @@ import {
     SidebarTrigger,
   } from "@/components/ui/sidebar"
 
-  import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-import { TranscriptList } from "@/components/unity/transcripts/transcript-list"
+import TranscriptList from "@/components/unity/transcripts-datatable/transcripts-list"
   
   
   export default function Page() {
@@ -45,20 +37,7 @@ import { TranscriptList } from "@/components/unity/transcripts/transcript-list"
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <Table>
-            <TableCaption>A list of saved Transcripts</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[150px]">Id</TableHead>
-                <TableHead className="w-[50px]">Type</TableHead>
-                <TableHead className="truncate w-[150px]">Date</TableHead>
-                <TableHead className="text-right w-[50px]">Participants</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TranscriptList/>
-            </TableBody>
-          </Table>
+          <TranscriptList/>
         </div>
       </main>
     )
