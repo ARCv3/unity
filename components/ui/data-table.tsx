@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
     []
   )
   const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({username: false})
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({username: false, actions:false})
 
   const table = useReactTable({
     data,

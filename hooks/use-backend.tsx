@@ -1,21 +1,37 @@
-
+"use client";
 import { API_BASE_URL, Application, Approval, DEFAULT_APPLICATION, DEFAULT_APPROVAL, DEFAULT_GUILD_RESP_STRIPPED, DEFAULT_GUILD_RESPONSE, DEFAULT_TRANSCRIPT, DEFAULT_TRANSCRIPT_RESPONSE, DEFAULT_USER_RESPONSE, GuildResponse, GuildResponseStripped, Insight, Note, Transcripts, TranscriptsResponse, UserResponse } from "@/lib/definitions";
 import * as React from "react"
 
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import {useAuthToken} from '@/hooks/use-auth-token'
+import { useRedirects } from "./use-redirects";
 
 export function useBackend(init:boolean = true) {
     
     const [isTest, setIsTest] = React.useState<boolean>(false);
     const [me, setMe] = React.useState(DEFAULT_USER_RESPONSE);
     const { token } = useAuthToken();
+    const {redirectLogout} = useRedirects();
 
     const get = React.useCallback(async (req_uri: string) => await axios.get(req_uri, {
         headers: {
             'Authorization': token
         }
     }), [token])
+
+
+    const post = React.useCallback(async (req_uri: string, data: unknown) => await axios.post(req_uri, data, {
+        headers: {
+            'Authorization': token
+        }
+    }), [token])
+
+
+    const sendApproval = React.useCallback(async (guild: string, id: string) : Promise<AxiosResponse> => {
+        return await post(`${API_BASE_URL}/api/applications/${guild}/${id}/approve`, {
+
+        })
+    }, [post])
 
     const fetchGuild = React.useCallback(async (id: string) : Promise<GuildResponse> => {
 
@@ -99,15 +115,33 @@ export function useBackend(init:boolean = true) {
         }
 
         const req_uri = `${API_BASE_URL}/api/discord/me`
-        const res = await get(req_uri);
 
-        if (req_uri !== res.request.responseURL) { 
+        try {
+            const res = await get(req_uri);
+    
+            return res.data;
+    
+        } catch ( e : unknown ) {
 
-            return DEFAULT_USER_RESPONSE;
+            if (isAxiosError(e)) {
+                if (e.request.responseURL.endsWith("/login")) {
+                    redirectLogout();
+                }
+            }
         }
 
-        return res.data;
+        return DEFAULT_USER_RESPONSE;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTest, get])
+
+    function isAxiosError(candidate: unknown): candidate is AxiosError {
+
+        if (candidate && typeof candidate === 'object' && 'isAxiosError' in candidate) {
+            return true;
+        }
+        return false;
+    }
 
     const fetchNotes = React.useCallback( async(guildid: string, userid: string) : Promise<Note[]> => {
 
@@ -193,6 +227,7 @@ export function useBackend(init:boolean = true) {
 
         },
         actions : {
+            sendApproval,
             fetchGuild,
             fetchMe,
             fetchMyGuilds,

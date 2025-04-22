@@ -8,6 +8,7 @@ export type Appeal = {
 }
 
 export type Application = {
+  _id: string; 
   guildSnowflake: string;
   userSnowflake: string;
   submitDate: string;

@@ -99,11 +99,6 @@ export const UserNotesTableColumns: ColumnDef<UserNotesTableData>[] = [
       </>)
     }
   },  
-  
-  {
-    accessorKey: "notes",
-    header: "Notes"
-  },
 
   {
     accessorKey: "lastNote",
@@ -113,7 +108,7 @@ export const UserNotesTableColumns: ColumnDef<UserNotesTableData>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc", true)}
         >
-          Last updated
+          Updated
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       </div>
@@ -127,6 +122,11 @@ export const UserNotesTableColumns: ColumnDef<UserNotesTableData>[] = [
         </div>
       )
     }
+  },
+
+  {
+    accessorKey: "notes",
+    header: "Notes",
   },
 
   {
