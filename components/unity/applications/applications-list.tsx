@@ -8,6 +8,7 @@ import { Application, EMPTY_GUILD_RESPONSE, UserResponse } from "@/lib/definitio
 import { useEffect, useState } from "react";
 import { ApplicationsTableColumns, ApplicationsTableData } from "./columns";
 import ApplicationsDisplay from "./application-display";
+import { Button } from "@/components/ui/button";
 
 
 export function ApplicationsList({
@@ -86,11 +87,44 @@ export function ApplicationsList({
                 data={applicationsData}/>
             </div>
             <div className="container mx-auto p-4 flex-4">
-                
+
                 {
    
                     applications.filter(x => x.userSnowflake === selectedUsers[0])[0] && 
-                    <ApplicationsDisplay application={applications.filter(x => x.userSnowflake === selectedUsers[0])[0]}/>
+                    <ApplicationsDisplay bottomValue = {
+                        <div className="text-right pt-4">
+                        {
+                            applications.filter(x => x.userSnowflake === selectedUsers[0])[0] &&
+                            <Button onClick={() => {
+
+                                const data = applicationsData.filter(x => x.userid === selectedUsers[0])[0];
+                                const indx = applicationsData.indexOf(data);
+
+                                if (data.approvals.filter(x => x.authorSnowflake === consts.me.id).length === 0)
+                                {
+
+                                    actions.sendApproval(guild.id, applications.filter(x => x.userSnowflake === data.userid)[0]._id);
+
+                                    data.approvals.push({
+                                        date: new Date().toUTCString(),
+                                        userSnowflake: data.userid,
+                                        authorSnowflake: consts.me.id,
+                                        guildSnowflake: guild.id
+                                    })
+
+                                    applicationsData[indx] = data;
+
+                                    setApplicationsData([...applicationsData]);
+
+                                }
+                                
+                            }}>
+                                Approve
+                            </Button>
+                        }
+                    </div>
+                    } application={applications.filter(x => x.userSnowflake === selectedUsers[0])[0]}/>
+    
                 }
 
             </div>

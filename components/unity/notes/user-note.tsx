@@ -32,8 +32,8 @@ export default function UserNote({
 
     <div className="flex flex-col *:my-2">
       <div className="flex align-items-center justify-between">
-        <MemberLabel user={user} placement="right" />
-        <p className="text-muted-foreground/50"><span className="text-muted">by</span> {author.username} <span className="text-muted">{timeAgo(parseInt(note.date)*1000)}</span></p>
+        <MemberLabel user={author} placement="right" />
+        <p className="text-muted-foreground/50"><span className="text-muted">saved on</span> {user.username} <span className="text-muted">{timeAgo(parseInt(note.date)*1000)}</span></p>
       </div>  
       <p className="border-muted border-2 bg-muted/50 p-2 rounded">{note.note}</p>
     </div>

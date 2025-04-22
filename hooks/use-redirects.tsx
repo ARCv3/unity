@@ -35,7 +35,13 @@ export function useRedirects() {
   const redirectLogin = React.useCallback(() => {
     push(`login`)
   }, [push])
+
+  const redirectLogout = React.useCallback(() => {
+    push('/api/revoke');
+  }, [push])
+
   return {
+    redirectLogout,
     redirectAuthLogin,
     redirectTranscript,
     redirect,

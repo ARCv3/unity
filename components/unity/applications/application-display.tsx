@@ -3,13 +3,16 @@
 import { Application } from "@/lib/definitions"
 import UserColumn from "../notes/user-column"
 import { timeAgo } from "@/lib/utils"
+import { ReactNode } from "react"
 
 export interface ApplicationDisplayProps {
-    application: Application
+    application: Application,
+    bottomValue?: ReactNode
 }
 
 export default function ApplicationsDisplay({
-    application
+    application,
+    bottomValue=null
 }: ApplicationDisplayProps) {
 
     return (
@@ -57,6 +60,7 @@ export default function ApplicationsDisplay({
                     <p className="font-semibold inline">Availabilities: </p>
                     <p className="opacity-50 inline">{application.avail}</p>
                 </div>
+                {bottomValue !== null && bottomValue}
             </div>
         </div>
     )
