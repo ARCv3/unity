@@ -25,7 +25,7 @@ export const TranscriptsTableColuns: ColumnDef<TranscriptsTableData>[] = [
                 variant="ghost"
                 onClick={() => {
                     const value = column.getFilterValue();
-                    console.log(value)
+            
 
                     switch (value) {
                         case "Jail": 

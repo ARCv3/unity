@@ -39,7 +39,7 @@ export const DEFAULT_APPROVAL : Approval = {
 }
 
 export const DEFAULT_APPLICATION : Application = {
-  "_id": "et",
+  "_id": "asdc",
   "guildSnowflake": "569929112932712469",
   "userSnowflake": "1235341250782302312",
   "submitDate": "1738798549229",
