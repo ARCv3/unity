@@ -116,6 +116,15 @@ export function ApplicationsList({
 
                                     setApplicationsData([...applicationsData]);
 
+                                } else {
+            
+                                    actions.sendApproval(guild.id, applications.filter(x => x.userSnowflake === data.userid)[0]._id);
+
+                                    const indx2 = data.approvals.indexOf(data.approvals.filter(x => x.authorSnowflake === consts.me.id)[0]);
+                                    data.approvals.splice(indx2, 1);
+                                    applicationsData[indx] = data;
+
+                                    setApplicationsData([...applicationsData]);
                                 }
                                 
                             }}>
