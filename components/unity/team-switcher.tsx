@@ -31,8 +31,8 @@ import { useBackend } from "@/hooks/use-backend"
 import { useSelectedGuildState } from "@/hooks/use-selected-guild-state"
 import { useSearchParams } from "next/navigation"
 
-const SIDEBAR_COOKIE_NAME = "sidebar-guild"
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
+export const SIDEBAR_COOKIE_NAME = "sidebar-guild"
+export const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 30
 
 export function TeamSwitcher({
   teams,
