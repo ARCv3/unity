@@ -545,4 +545,4 @@ export const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION?? `Lorem ipsum dolo
               doloremque mollitia fugiat omnis! Porro facilis quo animi
               consequatur. Explicabo.`
 export const SITE_HERO_IMAGE = process.env.SITE_HERO_IMAGE?? "https://shadcnblocks.com/images/block/placeholder-1.svg"
-console.log(process.env.UNITY_API_BASE_URI )
+
