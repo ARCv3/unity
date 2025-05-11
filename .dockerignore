@@ -1,2 +1,13 @@
 node_modules
 .next
+
+.storybook
+
+stories
+
+.env
+
+node_modules
+
+.next
+

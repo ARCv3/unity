@@ -32,8 +32,6 @@ export function middleware(req: NextRequest) {
       req.nextUrl.pathname,
     );
 
-    console.log(req.nextUrl.pathname);
-
     const redirect = NextResponse.redirect(new URL('/login', req.url));
     return redirect;
   }
